@@ -1,3 +1,5 @@
+import { absolute, add, ceil, divide, floor, mod, multiply, round, share, subtract } from './calculator'
+
 import { Exchange } from './exchange'
 import { currencies } from './currencies'
 
@@ -304,11 +306,133 @@ export class Money {
     }
 
     /**
+     * Add another amount to this Money instance
+     * 
+     * @param other 
+     * @returns 
+     */
+    add (other: number | string | Money): Money {
+        if (other instanceof Money) {
+            other = other.regularizedAmount()
+        }
+
+        return Money.of(add(this.regularizedAmount(), other))
+    }
+
+    /**
+     * Subtract another amount from this Money instance
+     * 
+     * @param other 
+     * @returns 
+     */
+    subtract (other: number | string | Money): Money {
+        if (other instanceof Money) {
+            other = other.regularizedAmount()
+        }
+
+        return Money.of(subtract(this.regularizedAmount(), other))
+    }
+
+    /**
+     * Multiply this Money instance by a factor
+     * 
+     * @param factor 
+     * @returns 
+     */
+    multiply (factor: number | string | Money): Money {
+        if (factor instanceof Money) {
+            factor = factor.regularizedAmount()
+        }
+
+        return Money.of(multiply(this.regularizedAmount(), factor))
+    }
+
+    /**
+     * Divide this Money instance by a divisor
+     * 
+     * @param divisor 
+     * @returns 
+     */
+    divide (divisor: number | string | Money): Money {
+        if (divisor instanceof Money) {
+            divisor = divisor.regularizedAmount()
+        }
+
+        return Money.of(divide(this.regularizedAmount(), divisor))
+    }
+
+    /**
+     * Round this Money instance up to the nearest integer
+     * 
+     * @returns 
+     */
+    ceil (): Money {
+        return Money.of(ceil(this.regularizedAmount()))
+    }
+
+    /**
+     * Round this Money instance down to the nearest integer
+     * 
+     * @returns 
+     */
+    floor (): Money {
+        return Money.of(floor(this.regularizedAmount()))
+    }
+
+    /**
+     * Calculate share of this Money instance based on total and ratio
+     * 
+     * @param total 
+     * @param ratio 
+     * @returns 
+     */
+    share (total: number | string | Money, ratio: string | number): Money {
+        if (total instanceof Money) {
+            total = total.regularizedAmount()
+        }
+
+        return Money.of(share(this.regularizedAmount(), total, ratio))
+    }
+
+    /**
+     * Round this Money instance to specified decimal digits
+     * 
+     * @param digits 
+     * @returns 
+     */
+    round (digits: number = 0): Money {
+        return Money.of(round(this.regularizedAmount(), digits))
+    }
+
+    /**
+     * Calculate modulus of this Money instance by divisor
+     * 
+     * @param divisor 
+     * @returns 
+     */
+    mod (divisor: number | string | Money): Money {
+        if (divisor instanceof Money) {
+            divisor = divisor.regularizedAmount()
+        }
+
+        return Money.of(mod(this.regularizedAmount(), divisor))
+    }
+
+    /**
+     * Get absolute value of this Money instance
+     * 
+     * @returns 
+     */
+    absolute (): Money {
+        return Money.of(absolute(this.regularizedAmount()))
+    }
+
+    /**
      * String representation of Money
      * 
      * @returns 
      */
-    toString () {
+    toString (): string {
         return this.format()
     }
 }

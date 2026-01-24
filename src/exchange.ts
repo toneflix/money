@@ -1,6 +1,7 @@
 import { CurrencyCode, Money } from './money'
 
 import { ExchangeException } from './Exceptions/ExchangeException'
+import { loadEnv } from './utils/env'
 
 export class Exchange {
     private static apiKey: string
@@ -19,6 +20,8 @@ export class Exchange {
         private target?: CurrencyCode,
         private amount: number = 1,
     ) {
+        // Load .env file if it exists
+        loadEnv()
     }
 
     /**
@@ -161,7 +164,10 @@ export class Exchange {
      * @returns 
      */
     private async send (getRate?: boolean): Promise<number> {
-        if (!Exchange.apiKey && !process.env.EXCHANGERATE_API_KEY) {
+        if (
+            (!Exchange.apiKey && !process.env.EXCHANGERATE_API_KEY) ||
+            Exchange.apiKey === ''
+        ) {
             throw new ExchangeException('missing-key')
         }
 
