@@ -1,4 +1,6 @@
-export const currencies = [
+import { CurrencyCode } from './types'
+
+export const currencies: { code: CurrencyCode; symbol: string }[] = [
     { code: 'AFN', symbol: '؋' },
     { code: 'ALL', symbol: 'Lek' },
     { code: 'DZD', symbol: 'د.ج' },

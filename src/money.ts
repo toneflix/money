@@ -1,15 +1,15 @@
-import { absolute, add, ceil, divide, floor, mod, multiply, round, share, subtract } from './calculator'
+import { absolute, add, ceil, divide, floor } from './calculator'
+import { mod, multiply, round, share, subtract } from './calculator'
 
+import { CurrencyCode } from './types'
 import { Exchange } from './exchange'
 import { currencies } from './currencies'
-
-export type CurrencyCode = typeof currencies[number]['code'];
 
 /**
  * Currency Type
  */
 export type Currency = {
-    code: CurrencyCode;
+    code: CurrencyCode
     symbol: string;
 };
 

@@ -1,6 +1,6 @@
-import { CurrencyCode, Money } from './money'
-
+import { CurrencyCode } from './types'
 import { ExchangeException } from './Exceptions/ExchangeException'
+import { Money } from './money'
 import { loadEnv } from './utils/env'
 
 export class Exchange {
