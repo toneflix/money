@@ -42,6 +42,8 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+        env:
+          EXCHANGERATE_API_KEY: ${{ secrets.EXCHANGERATE_API_KEY }}
 
       - name: Build project
         run: pnpm build
