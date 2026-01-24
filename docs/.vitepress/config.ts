@@ -12,22 +12,22 @@ export default defineConfig({
         ['meta', { name: 'theme-color', content: '#fbb322' }],
         ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
         ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }],
-        ['link', { rel: 'apple-touch-icon', href: '/money/banner.png' }],
-        ['link', { rel: 'mask-icon', href: '/money/banner.png', color: '#fbb322' }],
-        ['meta', { name: 'msapplication-TileImage', content: '/money/banner.png' }],
+        ['link', { rel: 'apple-touch-icon', href: 'https://toneflix.github.io/money/banner.png' }],
+        ['link', { rel: 'mask-icon', href: 'https://toneflix.github.io/money/banner.png', color: '#fbb322' }],
+        ['meta', { name: 'msapplication-TileImage', content: 'https://toneflix.github.io/money/banner.png' }],
         ['meta', { property: 'og:title', content: '@toneflix/money' }],
         ['meta', { property: 'og:description', content: 'A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.' }],
-        ['meta', { property: 'og:image', content: '/money/banner.png' }],
+        ['meta', { property: 'og:image', content: 'https://toneflix.github.io/money/banner.png' }],
         ['meta', { property: 'og:url', content: 'https://toneflix.github.io/money/' }],
         ['meta', { name: 'og:type', content: 'website' }],
         ['meta', { property: 'twitter:card', content: 'summary_large_image' }],
         ['meta', { name: 'twitter:title', content: '@toneflix/money' }],
         ['meta', { name: 'twitter:description', content: 'A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.' }],
-        ['meta', { name: 'twitter:image', content: '/money/banner.png' }],
+        ['meta', { name: 'twitter:image', content: 'https://toneflix.github.io/money/banner.png' }],
     ],
 
     themeConfig: {
-        logo: '/banner.png',
+        logo: 'https://toneflix.github.io/money/banner.png',
 
         nav: [
             { text: 'Guide', link: '/guide/getting-started' },
