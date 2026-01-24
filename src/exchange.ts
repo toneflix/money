@@ -41,13 +41,11 @@ export class Exchange {
      * @returns 
      */
     convert (amount: number, source?: CurrencyCode, target?: CurrencyCode): this {
-        if (!source && !this.source) {
-            throw new ExchangeException('Source currency not specified')
-        }
+        if (!source && !this.source)
+            throw new ExchangeException('missing-source')
 
-        if (!target && !this.target) {
-            throw new ExchangeException('Target currency not specified')
-        }
+        if (!target && !this.target)
+            throw new ExchangeException('missing-target')
 
         this.source = source ?? this.source
         this.target = target ?? this.target
@@ -66,13 +64,11 @@ export class Exchange {
      * @returns 
      */
     rate (source?: CurrencyCode, target?: CurrencyCode): this {
-        if (!source && !this.source) {
-            throw new ExchangeException('Source currency not specified')
-        }
+        if (!source && !this.source)
+            throw new ExchangeException('missing-source')
 
-        if (!target && !this.target) {
-            throw new ExchangeException('Target currency not specified')
-        }
+        if (!target && !this.target)
+            throw new ExchangeException('missing-target')
 
         this.source = source ?? this.source
         this.target = target ?? this.target

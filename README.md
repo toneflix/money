@@ -4,12 +4,12 @@ A simple and efficient money and currency conversion and formatting tool for Jav
 
 ## Features
 
-**Easy Currency Formatting** - Format numbers as currency with proper symbols and formatting  
-**Live Exchange Rates** - Convert between currencies using real-time exchange rates  
-**Chainable API** - Fluent, intuitive method chaining for complex operations  
-**TypeScript Support** - Full type safety with TypeScript definitions  
-**Multiple Currencies** - Support for all major world currencies  
-**Lightweight** - Minimal dependencies, maximum performance
+- [x] **Easy Currency Formatting** - Format numbers as currency with proper symbols and formatting
+- [x] **Live Exchange Rates** - Convert between currencies using real-time exchange rates
+- [x] **Chainable API** - Fluent, intuitive method chaining for complex operations
+- [x] **TypeScript Support** - Full type safety with TypeScript definitions
+- [x] **Multiple Currencies** - Support for all major world currencies
+- [x] **Lightweight** - Minimal dependencies, maximum performance
 
 ## Installation
 

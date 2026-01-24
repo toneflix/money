@@ -1,7 +1,20 @@
+type ExchangeErrorType =
+    'missing-target' |
+    'missing-source' |
+    'missing-key' |
+    'invalid-key' |
+    'quota-reached' |
+    'unsupported-code' |
+    'malformed-request' |
+    'inactive-account'
+
+/**
+ * Exchange Exception Class
+ */
 export class ExchangeException extends Error {
     public apiProvider = 'https://www.exchangerate-api.com'
 
-    constructor(public errorType: string | Error) {
+    constructor(public errorType: ExchangeErrorType | Error) {
         let message = ''
 
         if (errorType instanceof ExchangeException) {
@@ -31,6 +44,12 @@ export class ExchangeException extends Error {
                 break
             case 'inactive-account':
                 message = 'The account is inactive. Please contact support for assistance.'
+                break
+            case 'missing-source':
+                message = 'Source currency not specified'
+                break
+            case 'missing-target':
+                message = 'Target currency not specified'
                 break
             default:
                 message = typeof errorType === 'string' ? errorType : errorType.message
