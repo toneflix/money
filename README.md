@@ -627,6 +627,6 @@ MIT License - feel free to use this library in your projects.
 
 ## Credits
 
-Created by [Toneflix](https://toneflix.net)
+Created by [Toneflix Technologies Limited](https://toneflix.net)
 
 Exchange rates powered by [ExchangeRate-API](https://www.exchangerate-api.com/)
