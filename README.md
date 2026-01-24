@@ -5,8 +5,7 @@ A simple and efficient money and currency conversion and formatting tool for Jav
 [![npm version](https://img.shields.io/npm/v/@toneflix/money.svg?label=npm+version&style=flat-square)](https://www.npmjs.com/package/@toneflix/money)
 [![npm downloads](https://img.shields.io/npm/dt/%40toneflix%2Fmoney?style=flat-square)](https://www.npmjs.com/package/@toneflix/money)
 [![GitHub License](https://img.shields.io/github/license/toneflix/money?style=flat-square)](https://github.com/toneflix/money/blob/main/LICENSE)
-[![Run Tests](https://github.com/toneflix/money/actions/workflows/ci.yml/badge.svg)](https://github.com/toneflix/money/actions/workflows/run-tests.yml)
-[![Deploy Docs](https://github.com/toneflix/money/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/toneflix/money/actions/workflows/deploy-docs.yml)
+[![Run Tests](https://github.com/toneflix/money/actions/workflows/run-tests.yml/badge.svg)](https://github.com/toneflix/money/actions/workflows/run-tests.yml)
 
 ## Features
 
