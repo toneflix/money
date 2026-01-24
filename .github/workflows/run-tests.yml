@@ -18,6 +18,8 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x, 22.x, 24.x]
+    env:
+      EXCHANGERATE_API_KEY: ${{ secrets.EXCHANGERATE_API_KEY }}
 
     steps:
       - name: Checkout code
@@ -42,8 +44,6 @@ jobs:
 
       - name: Run tests
         run: pnpm test
-        env:
-          EXCHANGERATE_API_KEY: ${{ secrets.EXCHANGERATE_API_KEY }}
 
       - name: Build project
         run: pnpm build
