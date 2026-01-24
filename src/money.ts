@@ -8,7 +8,6 @@ export type CurrencyCode = typeof currencies[number]['code'];
  */
 export type Currency = {
     code: CurrencyCode;
-    name: string;
     symbol: string;
 };
 

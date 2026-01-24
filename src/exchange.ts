@@ -1,5 +1,3 @@
-import 'dotenv/config'
-
 import { CurrencyCode, Money } from './money'
 
 import { ExchangeException } from './Exceptions/ExchangeException'

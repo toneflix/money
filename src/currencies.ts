@@ -1,832 +1,168 @@
 export const currencies = [
-    {
-        code: 'AFN',
-        name: 'Afghani',
-        symbol: '؋'
-    },
-    {
-        code: 'ALL',
-        name: 'Lek',
-        symbol: 'Lek'
-    },
-    {
-        code: 'DZD',
-        name: 'Dinar',
-        symbol: 'د.ج'
-    },
-    {
-        code: 'AOA',
-        name: 'Kwanza',
-        symbol: 'Kz'
-    },
-    {
-        code: 'XCD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'ARS',
-        name: 'Peso',
-        symbol: '$'
-    },
-    {
-        code: 'AMD',
-        name: 'Dram',
-        symbol: '֏'
-    },
-    {
-        code: 'AUD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'AWG',
-        name: 'Guilder',
-        symbol: 'ƒ'
-    },
-    {
-        code: 'AZN',
-        name: 'Manat',
-        symbol: 'ман'
-    },
-    {
-        code: 'BSD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'BHD',
-        name: 'Dinar',
-        symbol: 'د.ب'
-    },
-    {
-        code: 'BDT',
-        name: 'Taka',
-        symbol: '৳'
-    },
-    {
-        code: 'BBD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'BYR',
-        name: 'Ruble',
-        symbol: 'p.'
-    },
-    {
-        code: 'BZD',
-        name: 'Dollar',
-        symbol: 'BZ$'
-    },
-    {
-        code: 'BMD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'BTN',
-        name: 'Ngultrum',
-        symbol: 'Nu.'
-    },
-    {
-        code: 'BOB',
-        name: 'Boliviano',
-        symbol: '$b'
-    },
-    {
-        code: 'BAM',
-        name: 'Marka',
-        symbol: 'KM'
-    },
-    {
-        code: 'BWP',
-        name: 'Pula',
-        symbol: 'P'
-    },
-    {
-        code: 'NOK',
-        name: 'Krone',
-        symbol: 'kr'
-    },
-    {
-        code: 'BRL',
-        name: 'Real',
-        symbol: 'R$'
-    },
-    {
-        code: 'BND',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'BGN',
-        name: 'Lev',
-        symbol: 'лв'
-    },
-    {
-        code: 'BIF',
-        name: 'Franc',
-        symbol: 'FBu'
-    },
-    {
-        code: 'KHR',
-        name: 'Riels',
-        symbol: '៛'
-    },
-    {
-        code: 'CAD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'CVE',
-        name: 'Escudo',
-        symbol: 'Esc'
-    },
-    {
-        code: 'KYD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'CLP',
-        name: 'Peso',
-        symbol: 'CLP'
-    },
-    {
-        code: 'CNY',
-        name: 'YuanRenminbi',
-        symbol: '¥'
-    },
-    {
-        code: 'COP',
-        name: 'Peso',
-        symbol: '$'
-    },
-    {
-        code: 'KMF',
-        name: 'Franc',
-        symbol: 'FCF'
-    },
-    {
-        code: 'NZD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'CRC',
-        name: 'Colon',
-        symbol: '₡'
-    },
-    {
-        code: 'HRK',
-        name: 'Kuna',
-        symbol: 'kn'
-    },
-    {
-        code: 'CUP',
-        name: 'Peso',
-        symbol: '₱'
-    },
-    {
-        code: 'CYP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'CZK',
-        name: 'Koruna',
-        symbol: 'Kč'
-    },
-    {
-        code: 'CDF',
-        name: 'Franc',
-        symbol: 'FCF'
-    },
-    {
-        code: 'DKK',
-        name: 'Krone',
-        symbol: 'kr'
-    },
-    {
-        code: 'DJF',
-        name: 'Franc',
-        symbol: 'FCF'
-    },
-    {
-        code: 'DOP',
-        name: 'Peso',
-        symbol: 'RD$'
-    },
-    {
-        code: 'EGP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'SVC',
-        name: 'Colone',
-        symbol: '$'
-    },
-    {
-        code: 'XAF',
-        name: 'Franc',
-        symbol: 'FCF'
-    },
-    {
-        code: 'ERN',
-        name: 'Nakfa',
-        symbol: 'Nfk'
-    },
-    {
-        code: 'EEK',
-        name: 'Kroon',
-        symbol: 'kr'
-    },
-    {
-        code: 'ETB',
-        name: 'Birr',
-        symbol: 'Br'
-    },
-    {
-        code: 'FKP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'DKK',
-        name: 'Krone',
-        symbol: 'kr'
-    },
-    {
-        code: 'FJD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'EUR',
-        name: 'Euro',
-        symbol: '€'
-    },
-    {
-        code: 'GMD',
-        name: 'Dalasi',
-        symbol: 'D'
-    },
-    {
-        code: 'GEL',
-        name: 'Lari',
-        symbol: '₾'
-    },
-    {
-        code: 'GHC',
-        name: 'Cedi',
-        symbol: '¢'
-    },
-    {
-        code: 'GIP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'DKK',
-        name: 'Krone',
-        symbol: 'kr'
-    },
-    {
-        code: 'GTQ',
-        name: 'Quetzal',
-        symbol: 'Q'
-    },
-    {
-        code: 'GNF',
-        name: 'Franc',
-        symbol: 'FG'
-    },
-    {
-        code: 'GYD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'HTG',
-        name: 'Gourde',
-        symbol: 'G'
-    },
-    {
-        code: 'HNL',
-        name: 'Lempira',
-        symbol: 'L'
-    },
-    {
-        code: 'HKD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'HUF',
-        name: 'Forint',
-        symbol: 'Ft'
-    },
-    {
-        code: 'ISK',
-        name: 'Krona',
-        symbol: 'kr'
-    },
-    {
-        code: 'INR',
-        name: 'Rupee',
-        symbol: '₹'
-    },
-    {
-        code: 'IDR',
-        name: 'Rupiah',
-        symbol: 'Rp'
-    },
-    {
-        code: 'IRR',
-        name: 'Rial',
-        symbol: '﷼'
-    },
-    {
-        code: 'IQD',
-        name: 'Dinar',
-        symbol: 'ع.د'
-    },
-    {
-        code: 'ILS',
-        name: 'Shekel',
-        symbol: '₪'
-    },
-    {
-        code: 'JMD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'JPY',
-        name: 'Yen',
-        symbol: '¥'
-    },
-    {
-        code: 'JOD',
-        name: 'Dinar',
-        symbol: 'JD'
-    },
-    {
-        code: 'KZT',
-        name: 'Tenge',
-        symbol: 'лв'
-    },
-    {
-        code: 'KES',
-        name: 'Shilling',
-        symbol: 'KSh'
-    },
-    {
-        code: 'KWD',
-        name: 'Dinar',
-        symbol: 'د.ك'
-    },
-    {
-        code: 'KGS',
-        name: 'Som',
-        symbol: 'лв'
-    },
-    {
-        code: 'LAK',
-        name: 'Kip',
-        symbol: '₭'
-    },
-    {
-        code: 'LVL',
-        name: 'Lat',
-        symbol: 'Ls'
-    },
-    {
-        code: 'LBP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'LSL',
-        name: 'Loti',
-        symbol: 'L'
-    },
-    {
-        code: 'LRD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'LYD',
-        name: 'Dinar',
-        symbol: 'ل.د'
-    },
-    {
-        code: 'CHF',
-        name: 'Franc',
-        symbol: 'CHF'
-    },
-    {
-        code: 'LTL',
-        name: 'Litas',
-        symbol: 'Lt'
-    },
-    {
-        code: 'MOP',
-        name: 'Pataca',
-        symbol: 'MOP'
-    },
-    {
-        code: 'MKD',
-        name: 'Denar',
-        symbol: 'ден'
-    },
-    {
-        code: 'MGA',
-        name: 'Ariary',
-        symbol: 'Ar'
-    },
-    {
-        code: 'MWK',
-        name: 'Kwacha',
-        symbol: 'MK'
-    },
-    {
-        code: 'MYR',
-        name: 'Ringgit',
-        symbol: 'RM'
-    },
-    {
-        code: 'MVR',
-        name: 'Rufiyaa',
-        symbol: 'Rf'
-    },
-    {
-        code: 'MTL',
-        name: 'Lira',
-        symbol: '₤'
-    },
-    {
-        code: 'MRO',
-        name: 'Ouguiya',
-        symbol: 'UM'
-    },
-    {
-        code: 'MUR',
-        name: 'Rupee',
-        symbol: '₨'
-    },
-    {
-        code: 'MXN',
-        name: 'Peso',
-        symbol: '$'
-    },
-    {
-        code: 'MDL',
-        name: 'Leu',
-        symbol: 'L'
-    },
-    {
-        code: 'MNT',
-        name: 'Tugrik',
-        symbol: '₮'
-    },
-    {
-        code: 'MAD',
-        name: 'Dirham',
-        symbol: 'د.م.'
-    },
-    {
-        code: 'MZN',
-        name: 'Meticail',
-        symbol: 'MT'
-    },
-    {
-        code: 'MMK',
-        name: 'Kyat',
-        symbol: 'K'
-    },
-    {
-        code: 'NAD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'NPR',
-        name: 'Rupee',
-        symbol: '₨'
-    },
-    {
-        code: 'ANG',
-        name: 'Guilder',
-        symbol: 'ƒ'
-    },
-    {
-        code: 'XPF',
-        name: 'Franc',
-        symbol: 'XPF'
-    },
-    {
-        code: 'NIO',
-        name: 'Cordoba',
-        symbol: 'C$'
-    },
-    {
-        code: 'NGN',
-        name: 'Naira',
-        symbol: '₦'
-    },
-    {
-        code: 'KPW',
-        name: 'Won',
-        symbol: '₩'
-    },
-    {
-        code: 'NOK',
-        name: 'Krone',
-        symbol: 'kr'
-    },
-    {
-        code: 'OMR',
-        name: 'Rial',
-        symbol: '﷼'
-    },
-    {
-        code: 'PKR',
-        name: 'Rupee',
-        symbol: '₨'
-    },
-    {
-        code: 'ILS',
-        name: 'Shekel',
-        symbol: '₪'
-    },
-    {
-        code: 'PAB',
-        name: 'Balboa',
-        symbol: 'B/.'
-    },
-    {
-        code: 'PGK',
-        name: 'Kina',
-        symbol: 'K'
-    },
-    {
-        code: 'PYG',
-        name: 'Guarani',
-        symbol: 'Gs'
-    },
-    {
-        code: 'PEN',
-        name: 'Sol',
-        symbol: 'S/.'
-    },
-    {
-        code: 'PHP',
-        name: 'Peso',
-        symbol: 'Php'
-    },
-    {
-        code: 'PLN',
-        name: 'Zloty',
-        symbol: 'zł'
-    },
-    {
-        code: 'QAR',
-        name: 'Rial',
-        symbol: '﷼'
-    },
-    {
-        code: 'RON',
-        name: 'Leu',
-        symbol: 'lei'
-    },
-    {
-        code: 'RUB',
-        name: 'Ruble',
-        symbol: 'руб'
-    },
-    {
-        code: 'RWF',
-        name: 'Franc',
-        symbol: 'FRw'
-    },
-    {
-        code: 'SHP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'WST',
-        name: 'Tala',
-        symbol: 'WS$'
-    },
-    {
-        code: 'STD',
-        name: 'Dobra',
-        symbol: 'Db'
-    },
-    {
-        code: 'SAR',
-        name: 'Rial',
-        symbol: '﷼'
-    },
-    {
-        code: 'RSD',
-        name: 'Dinar',
-        symbol: 'Дин'
-    },
-    {
-        code: 'SCR',
-        name: 'Rupee',
-        symbol: '₨'
-    },
-    {
-        code: 'SLL',
-        name: 'Leone',
-        symbol: 'Le'
-    },
-    {
-        code: 'SGD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'SKK',
-        name: 'Koruna',
-        symbol: 'Sk'
-    },
-    {
-        code: 'SBD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'SOS',
-        name: 'Shilling',
-        symbol: 'S'
-    },
-    {
-        code: 'ZAR',
-        name: 'Rand',
-        symbol: 'R'
-    },
-    {
-        code: 'GBP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'KRW',
-        name: 'Won',
-        symbol: '₩'
-    },
-    {
-        code: 'LKR',
-        name: 'Rupee',
-        symbol: '₨'
-    },
-    {
-        code: 'SDD',
-        name: 'Dinar',
-        symbol: 'ج.س'
-    },
-    {
-        code: 'SRD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'NOK',
-        name: 'Krone',
-        symbol: 'kr'
-    },
-    {
-        code: 'SZL',
-        name: 'Lilangeni',
-        symbol: 'L'
-    },
-    {
-        code: 'SEK',
-        name: 'Krona',
-        symbol: 'kr'
-    },
-    {
-        code: 'SYP',
-        name: 'Pound',
-        symbol: '£'
-    },
-    {
-        code: 'TWD',
-        name: 'Dollar',
-        symbol: 'NT$'
-    },
-    {
-        code: 'TJS',
-        name: 'Somoni',
-        symbol: 'SM'
-    },
-    {
-        code: 'TZS',
-        name: 'Shilling',
-        symbol: 'Sh'
-    },
-    {
-        code: 'THB',
-        name: 'Baht',
-        symbol: '฿'
-    },
-    {
-        code: 'TOP',
-        name: 'Paanga',
-        symbol: 'T$'
-    },
-    {
-        code: 'TTD',
-        name: 'Dollar',
-        symbol: 'TT$'
-    },
-    {
-        code: 'TND',
-        name: 'Dinar',
-        symbol: 'د.ت'
-    },
-    {
-        code: 'TRY',
-        name: 'Lira',
-        symbol: 'YTL'
-    },
-    {
-        code: 'TMM',
-        name: 'Manat',
-        symbol: 'm'
-    },
-    {
-        code: 'USD',
-        name: 'Dollar',
-        symbol: '$'
-    },
-    {
-        code: 'UGX',
-        name: 'Shilling',
-        symbol: 'Sh'
-    },
-    {
-        code: 'UAH',
-        name: 'Hryvnia',
-        symbol: '₴'
-    },
-    {
-        code: 'AED',
-        name: 'Dirham',
-        symbol: 'د.إ'
-    },
-    {
-        code: 'UYU',
-        name: 'Peso',
-        symbol: '$U'
-    },
-    {
-        code: 'UZS',
-        name: 'Som',
-        symbol: 'лв'
-    },
-    {
-        code: 'VUV',
-        name: 'Vatu',
-        symbol: 'Vt'
-    },
-    {
-        code: 'VEF',
-        name: 'Bolivar',
-        symbol: 'Bs'
-    },
-    {
-        code: 'VND',
-        name: 'Dong',
-        symbol: '₫'
-    },
-    {
-        code: 'MAD',
-        name: 'Dirham',
-        symbol: 'د.م.'
-    },
-    {
-        code: 'YER',
-        name: 'Rial',
-        symbol: '﷼'
-    },
-    {
-        code: 'ZMK',
-        name: 'Kwacha',
-        symbol: 'ZK'
-    },
-    {
-        code: 'ZWD',
-        name: 'Dollar',
-        symbol: 'Z$'
-    }
+    { code: 'AFN', symbol: '؋' },
+    { code: 'ALL', symbol: 'Lek' },
+    { code: 'DZD', symbol: 'د.ج' },
+    { code: 'AOA', symbol: 'Kz' },
+    { code: 'XCD', symbol: '$' },
+    { code: 'ARS', symbol: '$' },
+    { code: 'AMD', symbol: '֏' },
+    { code: 'AUD', symbol: '$' },
+    { code: 'AWG', symbol: 'ƒ' },
+    { code: 'AZN', symbol: 'ман' },
+    { code: 'BSD', symbol: '$' },
+    { code: 'BHD', symbol: 'د.ب' },
+    { code: 'BDT', symbol: '৳' },
+    { code: 'BBD', symbol: '$' },
+    { code: 'BYR', symbol: 'p.' },
+    { code: 'BZD', symbol: 'BZ$' },
+    { code: 'BMD', symbol: '$' },
+    { code: 'BTN', symbol: 'Nu.' },
+    { code: 'BOB', symbol: '$b' },
+    { code: 'BAM', symbol: 'KM' },
+    { code: 'BWP', symbol: 'P' },
+    { code: 'NOK', symbol: 'kr' },
+    { code: 'BRL', symbol: 'R$' },
+    { code: 'BND', symbol: '$' },
+    { code: 'BGN', symbol: 'лв' },
+    { code: 'BIF', symbol: 'FBu' },
+    { code: 'KHR', symbol: '៛' },
+    { code: 'CAD', symbol: '$' },
+    { code: 'CVE', symbol: 'Esc' },
+    { code: 'KYD', symbol: '$' },
+    { code: 'CLP', symbol: 'CLP' },
+    { code: 'CNY', symbol: '¥' },
+    { code: 'COP', symbol: '$' },
+    { code: 'KMF', symbol: 'FCF' },
+    { code: 'NZD', symbol: '$' },
+    { code: 'CRC', symbol: '₡' },
+    { code: 'HRK', symbol: 'kn' },
+    { code: 'CUP', symbol: '₱' },
+    { code: 'CYP', symbol: '£' },
+    { code: 'CZK', symbol: 'Kč' },
+    { code: 'CDF', symbol: 'FCF' },
+    { code: 'DKK', symbol: 'kr' },
+    { code: 'DJF', symbol: 'FCF' },
+    { code: 'DOP', symbol: 'RD$' },
+    { code: 'EGP', symbol: '£' },
+    { code: 'SVC', symbol: '$' },
+    { code: 'XAF', symbol: 'FCF' },
+    { code: 'ERN', symbol: 'Nfk' },
+    { code: 'EEK', symbol: 'kr' },
+    { code: 'ETB', symbol: 'Br' },
+    { code: 'FKP', symbol: '£' },
+    { code: 'DKK', symbol: 'kr' },
+    { code: 'FJD', symbol: '$' },
+    { code: 'EUR', symbol: '€' },
+    { code: 'GMD', symbol: 'D' },
+    { code: 'GEL', symbol: '₾' },
+    { code: 'GHC', symbol: '¢' },
+    { code: 'GIP', symbol: '£' },
+    { code: 'DKK', symbol: 'kr' },
+    { code: 'GTQ', symbol: 'Q' },
+    { code: 'GNF', symbol: 'FG' },
+    { code: 'GYD', symbol: '$' },
+    { code: 'HTG', symbol: 'G' },
+    { code: 'HNL', symbol: 'L' },
+    { code: 'HKD', symbol: '$' },
+    { code: 'HUF', symbol: 'Ft' },
+    { code: 'ISK', symbol: 'kr' },
+    { code: 'INR', symbol: '₹' },
+    { code: 'IDR', symbol: 'Rp' },
+    { code: 'IRR', symbol: '﷼' },
+    { code: 'IQD', symbol: 'ع.د' },
+    { code: 'ILS', symbol: '₪' },
+    { code: 'JMD', symbol: '$' },
+    { code: 'JPY', symbol: '¥' },
+    { code: 'JOD', symbol: 'JD' },
+    { code: 'KZT', symbol: 'лв' },
+    { code: 'KES', symbol: 'KSh' },
+    { code: 'KWD', symbol: 'د.ك' },
+    { code: 'KGS', symbol: 'лв' },
+    { code: 'LAK', symbol: '₭' },
+    { code: 'LVL', symbol: 'Ls' },
+    { code: 'LBP', symbol: '£' },
+    { code: 'LSL', symbol: 'L' },
+    { code: 'LRD', symbol: '$' },
+    { code: 'LYD', symbol: 'ل.د' },
+    { code: 'CHF', symbol: 'CHF' },
+    { code: 'LTL', symbol: 'Lt' },
+    { code: 'MOP', symbol: 'MOP' },
+    { code: 'MKD', symbol: 'ден' },
+    { code: 'MGA', symbol: 'Ar' },
+    { code: 'MWK', symbol: 'MK' },
+    { code: 'MYR', symbol: 'RM' },
+    { code: 'MVR', symbol: 'Rf' },
+    { code: 'MTL', symbol: '₤' },
+    { code: 'MRO', symbol: 'UM' },
+    { code: 'MUR', symbol: '₨' },
+    { code: 'MXN', symbol: '$' },
+    { code: 'MDL', symbol: 'L' },
+    { code: 'MNT', symbol: '₮' },
+    { code: 'MAD', symbol: 'د.م.' },
+    { code: 'MZN', symbol: 'MT' },
+    { code: 'MMK', symbol: 'K' },
+    { code: 'NAD', symbol: '$' },
+    { code: 'NPR', symbol: '₨' },
+    { code: 'ANG', symbol: 'ƒ' },
+    { code: 'XPF', symbol: 'XPF' },
+    { code: 'NIO', symbol: 'C$' },
+    { code: 'NGN', symbol: '₦' },
+    { code: 'KPW', symbol: '₩' },
+    { code: 'NOK', symbol: 'kr' },
+    { code: 'OMR', symbol: '﷼' },
+    { code: 'PKR', symbol: '₨' },
+    { code: 'ILS', symbol: '₪' },
+    { code: 'PAB', symbol: 'B/.' },
+    { code: 'PGK', symbol: 'K' },
+    { code: 'PYG', symbol: 'Gs' },
+    { code: 'PEN', symbol: 'S/.' },
+    { code: 'PHP', symbol: 'Php' },
+    { code: 'PLN', symbol: 'zł' },
+    { code: 'QAR', symbol: '﷼' },
+    { code: 'RON', symbol: 'lei' },
+    { code: 'RUB', symbol: 'руб' },
+    { code: 'RWF', symbol: 'FRw' },
+    { code: 'SHP', symbol: '£' },
+    { code: 'WST', symbol: 'WS$' },
+    { code: 'STD', symbol: 'Db' },
+    { code: 'SAR', symbol: '﷼' },
+    { code: 'RSD', symbol: 'Дин' },
+    { code: 'SCR', symbol: '₨' },
+    { code: 'SLL', symbol: 'Le' },
+    { code: 'SGD', symbol: '$' },
+    { code: 'SKK', symbol: 'Sk' },
+    { code: 'SBD', symbol: '$' },
+    { code: 'SOS', symbol: 'S' },
+    { code: 'ZAR', symbol: 'R' },
+    { code: 'GBP', symbol: '£' },
+    { code: 'KRW', symbol: '₩' },
+    { code: 'LKR', symbol: '₨' },
+    { code: 'SDD', symbol: 'ج.س' },
+    { code: 'SRD', symbol: '$' },
+    { code: 'NOK', symbol: 'kr' },
+    { code: 'SZL', symbol: 'L' },
+    { code: 'SEK', symbol: 'kr' },
+    { code: 'SYP', symbol: '£' },
+    { code: 'TWD', symbol: 'NT$' },
+    { code: 'TJS', symbol: 'SM' },
+    { code: 'TZS', symbol: 'Sh' },
+    { code: 'THB', symbol: '฿' },
+    { code: 'TOP', symbol: 'T$' },
+    { code: 'TTD', symbol: 'TT$' },
+    { code: 'TND', symbol: 'د.ت' },
+    { code: 'TRY', symbol: 'YTL' },
+    { code: 'TMM', symbol: 'm' },
+    { code: 'USD', symbol: '$' },
+    { code: 'UGX', symbol: 'Sh' },
+    { code: 'UAH', symbol: '₴' },
+    { code: 'AED', symbol: 'د.إ' },
+    { code: 'UYU', symbol: '$U' },
+    { code: 'UZS', symbol: 'лв' },
+    { code: 'VUV', symbol: 'Vt' },
+    { code: 'VEF', symbol: 'Bs' },
+    { code: 'VND', symbol: '₫' },
+    { code: 'MAD', symbol: 'د.م.' },
+    { code: 'YER', symbol: '﷼' },
+    { code: 'ZMK', symbol: 'ZK' },
+    { code: 'ZWD', symbol: 'Z$' }
 ] as const

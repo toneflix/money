@@ -6,6 +6,7 @@ export default defineConfig({
     outDir: 'dist',
     dts: true,
     sourcemap: false,
+    minify: true,
     external: [
         'fs',
         'path',

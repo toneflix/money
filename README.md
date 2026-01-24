@@ -2,6 +2,12 @@
 
 A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects. Format currency with ease, convert between currencies using live exchange rates, and chain operations elegantly.
 
+[![npm version](https://img.shields.io/npm/v/@toneflix/money.svg?label=npm+version&style=flat-square)](https://www.npmjs.com/package/@toneflix/money)
+[![npm downloads](https://img.shields.io/npm/dt/%40toneflix%2Fmoney?style=flat-square)](https://www.npmjs.com/package/@toneflix/money)
+[![GitHub License](https://img.shields.io/github/license/toneflix/money?style=flat-square)](https://github.com/toneflix/money/blob/main/LICENSE)
+[![Run Tests](https://github.com/toneflix/money/actions/workflows/ci.yml/badge.svg)](https://github.com/toneflix/money/actions/workflows/run-tests.yml)
+[![Deploy Docs](https://github.com/toneflix/money/actions/workflows/deploy-docs.yml/badge.svg)](https://github.com/toneflix/money/actions/workflows/deploy-docs.yml)
+
 ## Features
 
 - [x] **Easy Currency Formatting** - Format numbers as currency with proper symbols and formatting
@@ -9,7 +15,7 @@ A simple and efficient money and currency conversion and formatting tool for Jav
 - [x] **Chainable API** - Fluent, intuitive method chaining for complex operations
 - [x] **TypeScript Support** - Full type safety with TypeScript definitions
 - [x] **Multiple Currencies** - Support for all major world currencies
-- [x] **Lightweight** - Minimal dependencies, maximum performance
+- [x] **Zero Runtime Dependencies** - No external dependencies, lightweight and fast
 
 ## Installation
 
@@ -512,17 +518,41 @@ chain
 
 ### Using Environment Variables
 
+**This library has zero runtime dependencies** - you don't need `dotenv` or any other package!
+
+Set the environment variable in your preferred way:
+
+**Option 1: Using your own dotenv (if you have one)**
+
 ```bash
 # .env file
 EXCHANGERATE_API_KEY=your-api-key-here
 ```
 
-```typescript
-// No need to call Exchange.setApiKey()
-// It will automatically use process.env.EXCHANGERATE_API_KEY
+**Option 2: System environment variables**
 
+```bash
+# Terminal
+export EXCHANGERATE_API_KEY=your-api-key-here
+
+# Or in your deployment platform (Vercel, Netlify, etc.)
+```
+
+**Option 3: Runtime configuration**
+
+```typescript
+// Set in code (works everywhere)
 import { Exchange } from '@toneflix/money';
 
+Exchange.setApiKey('your-api-key-here');
+```
+
+**Then use it:**
+
+```typescript
+import { Exchange } from '@toneflix/money';
+
+// If EXCHANGERATE_API_KEY is set in environment or via setApiKey()
 const result = await Exchange.from('USD').to('EUR').convert(100);
 ```
 
@@ -617,7 +647,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT License - feel free to use this library in your projects.
+This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
