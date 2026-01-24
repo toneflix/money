@@ -7,11 +7,7 @@ export default defineConfig({
     dts: true,
     sourcemap: false,
     minify: true,
-    external: [
-        'fs',
-        'path',
-        'os',
-        'dotenv'
-    ],
+    treeshake: true,
+    exports: true,
     clean: true
 }) 

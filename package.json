@@ -1,51 +1,57 @@
 {
-    "name": "@toneflix/money",
-    "type": "module",
-    "version": "0.1.0",
-    "description": "A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.",
-    "main": "dist/index.js",
-    "private": false,
-    "homepage": "https://github.com/toneflix/money#readme",
-    "repository": {
-        "url": "https://github.com/toneflix/money.git",
-        "type": "git"
+  "name": "@toneflix/money",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.",
+  "main": "./dist/money.cjs",
+  "private": false,
+  "homepage": "https://github.com/toneflix/money#readme",
+  "repository": {
+    "url": "https://github.com/toneflix/money.git",
+    "type": "git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/money.js",
+      "require": "./dist/money.cjs"
     },
-    "publishConfig": {
-        "access": "public"
-    },
-    "exports": {
-        ".": "./dist/index.js"
-    },
-    "files": [
-        "dist"
-    ],
-    "keywords": [
-        "money",
-        "currency",
-        "conversion",
-        "tool",
-        "forex",
-        "formatting",
-        "dollar",
-        "render",
-        "h3ravel",
-        "toneflix"
-    ],
-    "scripts": {
-        "test": "pnpm vitest",
-        "lint": "eslint . --ext .ts --ext .js",
-        "build": "tsdown",
-        "release": "pnpm build && pnpm changeset version && pnpm changeset publish",
-        "publish-it": "pnpm build && pnpm publish --tag latest"
-    },
-    "devDependencies": {
-        "@changesets/cli": "^2.29.5",
-        "@eslint/js": "^9.39.2",
-        "@eslint/markdown": "^7.5.1",
-        "eslint": "^9.39.2",
-        "tsdown": "^0.15.4",
-        "typescript": "^5.4.5",
-        "typescript-eslint": "^8.53.0",
-        "vitest": "^3.2.4"
-    }
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "money",
+    "currency",
+    "conversion",
+    "tool",
+    "forex",
+    "formatting",
+    "dollar",
+    "render",
+    "h3ravel",
+    "toneflix"
+  ],
+  "scripts": {
+    "test": "pnpm vitest",
+    "lint": "eslint . --ext .ts --ext .js",
+    "build": "tsdown",
+    "release": "pnpm build && pnpm changeset version && pnpm changeset publish",
+    "publish-it": "pnpm build && pnpm publish --tag latest"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.5",
+    "@eslint/js": "^9.39.2",
+    "@eslint/markdown": "^7.5.1",
+    "eslint": "^9.39.2",
+    "tsdown": "^0.15.4",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^8.53.0",
+    "vitest": "^3.2.4"
+  },
+  "module": "./dist/money.js",
+  "types": "./dist/money.d.cts"
 }
