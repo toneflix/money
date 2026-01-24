@@ -5,7 +5,7 @@
   "description": "A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.",
   "main": "./dist/money.cjs",
   "private": false,
-  "homepage": "https://github.com/toneflix/money#readme",
+  "homepage": "https://toneflix.github.io/money",
   "repository": {
     "url": "https://github.com/toneflix/money.git",
     "type": "git"
