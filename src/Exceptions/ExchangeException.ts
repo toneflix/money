@@ -14,19 +14,19 @@ type ExchangeErrorType =
 export class ExchangeException extends Error {
     public apiProvider = 'https://www.exchangerate-api.com'
 
-    constructor(public errorType: ExchangeErrorType | Error) {
+    constructor(public type: ExchangeErrorType | Error) {
         let message = ''
 
-        if (errorType instanceof ExchangeException) {
-            message = errorType.message
+        if (type instanceof ExchangeException) {
+            message = type.message
             super(message)
             this.name = 'ExchangeException'
-            this.errorType = errorType.errorType || 'unknown'
+            this.type = type.type || 'unknown'
 
             return
         }
 
-        switch (errorType) {
+        switch (type) {
             case 'missing-key':
                 message = 'API Key is missing. Please set the API key using Exchange.setApiKey() or in the EXCHANGERATE_API_KEY environment variable.'
                 break
@@ -52,7 +52,7 @@ export class ExchangeException extends Error {
                 message = 'Target currency not specified'
                 break
             default:
-                message = typeof errorType === 'string' ? errorType : errorType.message
+                message = typeof type === 'string' ? type : type.message
         }
 
         super(message)

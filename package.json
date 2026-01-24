@@ -40,7 +40,10 @@
     "lint": "eslint . --ext .ts --ext .js",
     "build": "tsdown",
     "release": "pnpm build && pnpm changeset version && pnpm changeset publish",
-    "publish-it": "pnpm build && pnpm publish --tag latest"
+    "publish-it": "pnpm build && pnpm publish --tag latest",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.5",
@@ -50,6 +53,7 @@
     "tsdown": "^0.15.4",
     "typescript": "^5.4.5",
     "typescript-eslint": "^8.53.0",
+    "vitepress": "^1.6.4",
     "vitest": "^3.2.4"
   },
   "module": "./dist/money.js",

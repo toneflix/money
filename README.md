@@ -11,6 +11,7 @@ A simple and efficient money and currency conversion and formatting tool for Jav
 
 - [x] **Easy Currency Formatting** - Format numbers as currency with proper symbols and formatting
 - [x] **Live Exchange Rates** - Convert between currencies using real-time exchange rates
+- [x] **Mathematical Operations** - Perform calculations with proper precision (add, subtract, multiply, divide, etc.)
 - [x] **Chainable API** - Fluent, intuitive method chaining for complex operations
 - [x] **TypeScript Support** - Full type safety with TypeScript definitions
 - [x] **Multiple Currencies** - Support for all major world currencies
@@ -245,6 +246,118 @@ money.toString() // "$100.00"
 `${money}`; // "$100.00"
 ```
 
+##### `add(other: number | string | Money)`
+
+Add another amount to this Money instance.
+
+```typescript
+const money = new Money(100, 'USD');
+const result = money.add(50);
+console.log(result.format()); // "$150.00"
+
+// Can also add another Money instance
+const other = new Money(25, 'USD');
+money.add(other).format(); // "$125.00"
+```
+
+##### `subtract(other: number | string | Money)`
+
+Subtract another amount from this Money instance.
+
+```typescript
+const money = new Money(100, 'USD');
+const result = money.subtract(30);
+console.log(result.format()); // "$70.00"
+```
+
+##### `multiply(factor: number | string | Money)`
+
+Multiply this Money instance by a factor.
+
+```typescript
+const money = new Money(50, 'USD');
+const result = money.multiply(3);
+console.log(result.format()); // "$150.00"
+```
+
+##### `divide(divisor: number | string | Money)`
+
+Divide this Money instance by a divisor.
+
+```typescript
+const money = new Money(100, 'USD');
+const result = money.divide(4);
+console.log(result.format()); // "$25.00"
+```
+
+##### `ceil()`
+
+Round this Money instance up to the nearest integer.
+
+```typescript
+const money = new Money(99.45, 'USD');
+const result = money.ceil();
+console.log(result.format()); // "$100.00"
+```
+
+##### `floor()`
+
+Round this Money instance down to the nearest integer.
+
+```typescript
+const money = new Money(99.95, 'USD');
+const result = money.floor();
+console.log(result.format()); // "$99.00"
+```
+
+##### `round(digits?: number)`
+
+Round this Money instance to specified decimal digits.
+
+```typescript
+const money = new Money(99.456, 'USD');
+
+money.round().format(); // "$99.00" (default: 0 decimals)
+money.round(1).format(); // "$99.50"
+money.round(2).format(); // "$99.46"
+```
+
+##### `mod(divisor: number | string | Money)`
+
+Calculate modulus (remainder) of this Money instance by divisor.
+
+```typescript
+const money = new Money(100, 'USD');
+const result = money.mod(30);
+console.log(result.format()); // "$10.00" (100 % 30 = 10)
+```
+
+##### `absolute()`
+
+Get absolute value of this Money instance.
+
+```typescript
+const money = new Money(-100, 'USD');
+const result = money.absolute();
+console.log(result.format()); // "$100.00"
+```
+
+##### `share(total: number | string | Money, ratio: string | number)`
+
+Calculate share of this Money instance based on total and ratio.
+
+```typescript
+const money = new Money(100, 'USD');
+const result = money.share(1000, 0.1); // 10% share
+console.log(result.format()); // "$10.00"
+
+// Calculate proportional share
+const part = new Money(25, 'USD');
+const total = 100;
+const ratio = 0.5; // 50% ratio
+part.share(total, ratio).format(); // "$12.50"
+```
+
 ### Exchange Class
 
 The `Exchange` class handles currency conversion with live exchange rates.
@@ -443,6 +556,52 @@ console.log(Money.compact(1234567890, 'USD')); // "$1.2B"
 console.log(Money.compact(1234567890123, 'USD')); // "$1.2T"
 ```
 
+### Mathematical Operations
+
+```typescript
+import { Money } from '@toneflix/money';
+
+const price = new Money(99.99, 'USD');
+
+// Addition
+const withTax = price.add(7.5);
+console.log(withTax.format()); // "$107.49"
+
+// Subtraction
+const withDiscount = price.subtract(10);
+console.log(withDiscount.format()); // "$89.99"
+
+// Multiplication
+const quantity = price.multiply(3);
+console.log(quantity.format()); // "$299.97"
+
+// Division
+const perItem = price.divide(2);
+console.log(perItem.format()); // "$49.995" or rounded
+
+// Rounding
+const rounded = price.round(2);
+console.log(rounded.format()); // "$100.00"
+
+// Chaining operations
+const total = new Money(100, 'USD').add(50).multiply(2).subtract(25).round();
+
+console.log(total.format()); // "$275.00"
+
+// Calculate percentage/share
+const amount = new Money(100, 'USD');
+const tip = amount.share(100, 0.15); // 15% tip
+console.log(tip.format()); // "$15.00"
+
+// Absolute value
+const debt = new Money(-50, 'USD');
+console.log(debt.absolute().format()); // "$50.00"
+
+// Modulus
+const change = new Money(100, 'USD').mod(30);
+console.log(change.format()); // "$10.00"
+```
+
 ### Currency Conversion
 
 ```typescript
@@ -565,7 +724,7 @@ try {
 
   console.log(result);
 } catch (error) {
-  if (error.message.includes('missing-key')) {
+  if (error.type === 'missing-key') {
     console.error('Please set your API key');
   } else {
     console.error('Conversion error:', error.message);
