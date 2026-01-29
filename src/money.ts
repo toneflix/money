@@ -138,6 +138,15 @@ export class Money {
     }
 
     /**
+     * Get raw numeric value
+     * 
+     * @returns 
+     */
+    value (): number {
+        return this.regularizedAmount()
+    }
+
+    /**
      * Format amount to currency string
      * 
      * @returns 
