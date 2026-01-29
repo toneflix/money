@@ -110,7 +110,7 @@ describe('Exchange', () => {
             const exchange = new ExchangeClone('USD', 'EUR')
             await expect(async () => exchange.convert(100))
                 .rejects
-                .toThrow('API Key is missing or the provided API Key is invalid. Please check and try again.')
+                .toThrow('Account is inactive, API Key is missing or the provided API Key is invalid. Please check and try again.')
         })
 
         it('should throw error for invalid API key', async () => {
@@ -119,7 +119,7 @@ describe('Exchange', () => {
             const exchange = new Exchange('USD', 'EUR')
             await expect(async () => exchange.convert(100))
                 .rejects
-                .toThrow('The account is inactive. Please contact support for assistance.')
+                .toThrow('Account is inactive, API Key is missing or the provided API Key is invalid. Please check and try again.')
         })
     })
 })

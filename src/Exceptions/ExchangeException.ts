@@ -28,10 +28,13 @@ export class ExchangeException extends Error {
 
         switch (type) {
             case 'missing-key':
-                message = 'API Key is missing or the provided API Key is invalid. Please check and try again.'
+                message = 'Account is inactive, API Key is missing or the provided API Key is invalid. Please check and try again.'
                 break
             case 'invalid-key':
-                message = 'API Key is missing or the provided API Key is invalid. Please check and try again.'
+                message = 'Account is inactive, API Key is missing or the provided API Key is invalid. Please check and try again.'
+                break
+            case 'inactive-account':
+                message = 'Account is inactive, API Key is missing or the provided API Key is invalid. Please check and try again.'
                 break
             case 'quota-reached':
                 message = 'API request quota reached. Please upgrade your plan or wait until the quota resets.'
@@ -41,9 +44,6 @@ export class ExchangeException extends Error {
                 break
             case 'malformed-request':
                 message = 'The request was malformed. Please check the parameters and try again.'
-                break
-            case 'inactive-account':
-                message = 'The account is inactive. Please contact support for assistance.'
                 break
             case 'missing-source':
                 message = 'Source currency not specified'
