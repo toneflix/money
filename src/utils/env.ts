@@ -20,8 +20,11 @@ export const loadEnv = async (filePath: string = '.env'): Promise<void> => {
             process.env.VITE_EXCHANGERATE_API_KEY ??
             process.env.NEXT_EXCHANGERATE_API_KEY ?? ''
 
-        if (key !== '') {
+        if ((key !== '' && typeof key !== 'undefined') || helpers.useIsEnvLoaded())
             return
+
+        if (key.includes('xxxxx')) {
+            return void helpers.useSetEnvLoaded(true)
         }
 
         // Dynamically import Node.js modules (only available in Node.js)
