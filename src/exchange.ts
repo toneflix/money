@@ -20,8 +20,6 @@ export class Exchange {
         private target?: CurrencyCode,
         private amount: number = 1,
     ) {
-        // Load .env file if it exists
-        loadEnv()
     }
 
     /**
@@ -164,14 +162,18 @@ export class Exchange {
      * @returns 
      */
     private async send (getRate?: boolean): Promise<number> {
-        if (
-            (!Exchange.apiKey && !process.env.EXCHANGERATE_API_KEY) ||
-            Exchange.apiKey === ''
-        ) {
+        // Load .env file if it exists
+        await loadEnv()
+
+        const key = process.env.EXCHANGERATE_API_KEY ??
+            process.env.VITE_EXCHANGERATE_API_KEY ??
+            process.env.NEXT_EXCHANGERATE_API_KEY ?? ''
+
+        if (key === '' || Exchange.apiKey === '') {
             throw new ExchangeException('missing-key')
         }
 
-        const apiKey = Exchange.apiKey ?? process.env.EXCHANGERATE_API_KEY!
+        const apiKey = Exchange.apiKey ?? key!
         const baseUrl = `https://v6.exchangerate-api.com/v6/${apiKey}`
 
         try {

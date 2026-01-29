@@ -1,31 +1,41 @@
-import module from 'module'
-
-const require = module.createRequire(import.meta.url)
-
-interface LoadEnv {
-    (filePath?: string): void
-    (filePath: string, throwError: boolean): void
-}
+import helpers from './helpers'
 
 /**
  * Simple .env file parser
  * Reads and parses .env file without external dependencies
+ * Safe for both Node.js and browser environments
  */
-export const loadEnv: LoadEnv = (
-    filePath: string = '.env',
-    throwError: boolean = false
-): void => {
-    try {
-        const { resolve } = require('path')
-        const envPath = resolve(process.cwd(), filePath)
-        const { existsSync, readFileSync } = require('fs')
+export const loadEnv = async (filePath: string = '.env'): Promise<void> => {
+    helpers.useSetEnvLoaded(false)
 
-        // Check if .env file exists or process.env.EXCHANGERATE_API_KEY is already set
-        if (!existsSync(envPath) || process.env.EXCHANGERATE_API_KEY) {
+    // Check if we're in Node.js environment
+    if (typeof process === 'undefined' || typeof process.versions === 'undefined' || !process.versions.node) {
+        // Browser environment - skip silently
+        return
+    }
+
+    try {
+        // Check if EXCHANGERATE_API_KEY is already set
+        const key = process.env.EXCHANGERATE_API_KEY ??
+            process.env.VITE_EXCHANGERATE_API_KEY ??
+            process.env.NEXT_EXCHANGERATE_API_KEY ?? ''
+
+        if (key !== '') {
             return
         }
 
-        const content = readFileSync(envPath, 'utf-8')
+        // Dynamically import Node.js modules (only available in Node.js)
+        const fs = await import('fs')
+        const path = await import('path')
+
+        const envPath = path.resolve(process.cwd(), filePath)
+
+        // Check if .env file exists
+        if (!fs.existsSync(envPath)) {
+            return
+        }
+
+        const content = fs.readFileSync(envPath, 'utf-8')
         const lines = content.split('\n')
 
         for (const line of lines) {
@@ -55,10 +65,10 @@ export const loadEnv: LoadEnv = (
                 process.env[key] = value
             }
         }
-    } catch {
-        // Silently fail if .env file cannot be read
-        if (throwError) {
-            throw new Error('Failed to load .env file')
-        }
+
+        helpers.useSetEnvLoaded(true)
+    } catch (error) {
+        // Silently fail in case of errors (file read issues, import failures, etc.)
+        console.debug('Failed to load .env file:', error)
     }
 }
