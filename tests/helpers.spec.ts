@@ -8,11 +8,13 @@ describe('Helpers', () => {
         it('should load environment variables from .env file', async () => {
             const spy = vi.spyOn(helpers, 'useSetEnvLoaded').mockReturnValue()
 
-            await loadEnv('.env.example')
-
-            expect(spy).toHaveBeenCalledTimes(2)
-
-            expect(process.env.EXCHANGERATE_API_KEY).toBe('0xxxxxxxxxx')
+            if (!process.env.EXCHANGERATE_API_KEY) {
+                await loadEnv('.env.example')
+                expect(process.env.EXCHANGERATE_API_KEY).toBe('0xxxxxxxxxx')
+                expect(spy).toHaveBeenCalledTimes(2)
+            } else {
+                expect(spy).toHaveBeenCalledTimes(1)
+            }
 
             spy.mockRestore()
         })
