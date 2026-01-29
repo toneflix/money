@@ -110,7 +110,7 @@ describe('Exchange', () => {
             const exchange = new ExchangeClone('USD', 'EUR')
             await expect(async () => exchange.convert(100))
                 .rejects
-                .toThrow('API Key is missing. Please set the API key using Exchange.setApiKey() or in the EXCHANGERATE_API_KEY environment variable.')
+                .toThrow('API Key is missing or the provided API Key is invalid. Please check and try again.')
         })
 
         it('should throw error for invalid API key', async () => {

@@ -28,10 +28,10 @@ export class ExchangeException extends Error {
 
         switch (type) {
             case 'missing-key':
-                message = 'API Key is missing. Please set the API key using Exchange.setApiKey() or in the EXCHANGERATE_API_KEY environment variable.'
+                message = 'API Key is missing or the provided API Key is invalid. Please check and try again.'
                 break
             case 'invalid-key':
-                message = 'The provided API Key is invalid. Please check and try again.'
+                message = 'API Key is missing or the provided API Key is invalid. Please check and try again.'
                 break
             case 'quota-reached':
                 message = 'API request quota reached. Please upgrade your plan or wait until the quota resets.'
