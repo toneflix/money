@@ -3,11 +3,8 @@
 A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects. Format currency with ease, convert between currencies using live exchange rates, and chain operations elegantly.
 
 [![npm version](https://img.shields.io/npm/v/@toneflix/money.svg?label=npm+version&style=flat-square)](https://www.npmjs.com/package/@toneflix/money)
-
 [![npm downloads](https://img.shields.io/npm/dt/%40toneflix%2Fmoney?style=flat-square)](https://www.npmjs.com/package/@toneflix/money)
-
 [![GitHub License](https://img.shields.io/github/license/toneflix/money?style=flat-square)](https://github.com/toneflix/money/blob/main/LICENSE)
-
 [![Run Tests](https://github.com/toneflix/money/actions/workflows/run-tests.yml/badge.svg)](https://github.com/toneflix/money/actions/workflows/run-tests.yml)
 
 ## Features
@@ -121,7 +118,6 @@ new Money(amount?: number | string, currency?: CurrencyCode)
 **Parameters:**
 
 - `amount` - The monetary amount to format
-
 - `currency` - Optional currency code (e.g., 'USD', 'EUR', 'GBP')
 
 **Example:**
@@ -452,9 +448,7 @@ new Exchange(source?: CurrencyCode, target?: CurrencyCode, amount?: number)
 **Parameters:**
 
 - `source` - Source currency code (optional)
-
 - `target` - Target currency code (optional)
-
 - `amount` - Amount to convert (optional, default: 1)
 
 **Example:**
@@ -624,11 +618,8 @@ chain
 **How it works:**
 
 - All methods (`from()`, `to()`, `convert()`, `rate()`) return `this` synchronously
-
 - The chain stays synchronous until you await it or call `.then()`
-
 - When awaited/then'd, it automatically executes the API call
-
 - This gives you full control over when the async operation happens
 
 ## Exchange Rate Providers
@@ -1018,24 +1009,15 @@ try {
 
 The library supports all major world currencies including but not limited to:
 
-- 🇺🇸 USD (US Dollar)
-
-- 🇪🇺 EUR (Euro)
-
-- 🇬🇧 GBP (British Pound)
-
-- 🇯🇵 JPY (Japanese Yen)
-
-- 🇨🇦 CAD (Canadian Dollar)
-
-- 🇦🇺 AUD (Australian Dollar)
-
-- 🇨🇭 CHF (Swiss Franc)
-
-- 🇨🇳 CNY (Chinese Yuan)
-
-- 🇮🇳 INR (Indian Rupee)
-
+- 🇺🇸 USD (US Dollar) 
+- 🇪🇺 EUR (Euro) 
+- 🇬🇧 GBP (British Pound) 
+- 🇯🇵 JPY (Japanese Yen) 
+- 🇨🇦 CAD (Canadian Dollar) 
+- 🇦🇺 AUD (Australian Dollar) 
+- 🇨🇭 CHF (Swiss Franc) 
+- 🇨🇳 CNY (Chinese Yuan) 
+- 🇮🇳 INR (Indian Rupee) 
 - And many more...
 
 See the full list in the [currencies.ts](src/currencies.ts) file.
@@ -1128,9 +1110,7 @@ This project is licensed under the ISC License - see the [LICENSE](LICENSE) file
 ## Support
 
 - Issues: [GitHub Issues](https://github.com/toneflix/money/issues)
-
 - Documentation: [GitHub Repository](https://github.com/toneflix/money)
-
 - Discussions: [GitHub Discussions](https://github.com/toneflix/money/discussions)
 
 ## Credits
