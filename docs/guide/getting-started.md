@@ -21,6 +21,6 @@ Welcome to @toneflix/money! This guide will help you get started with formatting
 
 ## Next Steps
 
-- [Installation](/guide/installation) - Install the library
-- [Quick Start](/guide/quick-start) - Start using it right away
-- [API Reference](/api/money) - Explore the full API
+- [Installation](./installation) - Install the library
+- [Quick Start](./quick-start) - Start using it right away
+- [API Reference](../api/money) - Explore the full API

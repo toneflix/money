@@ -23,7 +23,11 @@ features:
 
   - icon: 💱
     title: Live Exchange Rates
-    details: Convert between currencies using real-time exchange rates from a reliable API.
+    details: Convert currencies using live exchange rates from multiple supported providers.
+
+  - icon: 🔌
+    title: Multiple Exchange Providers
+    details: Use ExchangeRateApi by default, switch to FrankfurterApi, or configure another compatible provider with Exchange.setProvider().
 
   - icon: 🧮
     title: Mathematical Operations
@@ -45,7 +49,7 @@ features:
 ## Quick Example
 
 ```typescript
-import { Money, Exchange } from '@toneflix/money';
+import { Money, Exchange, FrankfurterApi } from '@toneflix/money';
 
 // Format currency
 Money.format(1234.56, 'USD'); // "$1,234.56"
@@ -55,27 +59,19 @@ const total = new Money(100, 'USD').add(50).multiply(2).subtract(25);
 
 console.log(total.format()); // "$275.00"
 
-// Convert currencies
+// ExchangeRateApi is the default provider.
+// Existing API key configuration remains supported.
 Exchange.setApiKey('your-api-key');
+
 const euros = await Exchange.from('USD').to('EUR').convert(100);
 
 console.log(euros); // e.g., 92.5
+
+// Or switch to FrankfurterApi.
+// Frankfurter does not require an API key.
+Exchange.setProvider(FrankfurterApi);
+
+const pounds = await Exchange.from('USD').to('GBP').convert(100);
+
+console.log(pounds); // e.g., 78.4
 ```
-
-## Installation
-
-::: code-group
-
-```bash [npm]
-npm install @toneflix/money
-```
-
-```bash [pnpm]
-pnpm add @toneflix/money
-```
-
-```bash [yarn]
-yarn add @toneflix/money
-```
-
-:::

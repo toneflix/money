@@ -12,5 +12,8 @@ export default defineConfig({
     clean: true,
     outputOptions: {
         legalComments: 'inline'
+    },
+    env: {
+        EXCHANGERATE_API_KEY: process.env.EXCHANGERATE_API_KEY
     }
 }) 

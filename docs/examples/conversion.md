@@ -1,13 +1,39 @@
 # Conversion Examples
 
-Practical examples of currency conversion.
+Practical examples of currency conversion using configurable exchange-rate providers.
+
+## Provider Setup
+
+`ExchangeRateApi` is the default provider and requires an API key:
+
+```typescript
+import {
+  Exchange,
+  ExchangeRateApi,
+  FrankfurterApi,
+  Money,
+} from '@toneflix/money';
+
+// ExchangeRateApi is the default provider.
+// Selecting it explicitly is optional.
+Exchange.setProvider(ExchangeRateApi);
+Exchange.setApiKey('your-api-key');
+```
+
+Or use `FrankfurterApi`, which does not require an API key:
+
+```typescript
+import { Exchange, FrankfurterApi, Money } from '@toneflix/money';
+
+Exchange.setProvider(FrankfurterApi);
+```
+
+All examples below work with whichever provider you configure.
 
 ## Travel Budget Calculator
 
 ```typescript
 import { Exchange, Money } from '@toneflix/money';
-
-Exchange.setApiKey('your-api-key');
 
 async function calculateTravelBudget(budgetUSD: number, destination: string) {
   const currencies: Record<string, string> = {
@@ -18,6 +44,7 @@ async function calculateTravelBudget(budgetUSD: number, destination: string) {
   };
 
   const targetCurrency = currencies[destination];
+
   const converted = await Exchange.from('USD')
     .to(targetCurrency)
     .convert(budgetUSD);
@@ -35,6 +62,7 @@ async function calculateTravelBudget(budgetUSD: number, destination: string) {
 }
 
 await calculateTravelBudget(2000, 'europe');
+
 // Output:
 // Budget for europe:
 //   USD: $2,000.00
@@ -57,13 +85,17 @@ async function createInternationalInvoice(
 
   console.log('Invoice Summary');
   console.log('---------------');
+
   items.forEach((item) => {
     console.log(`${item.name}: ${Money.format(item.price, fromCurrency)}`);
   });
+
   console.log('---------------');
+
   console.log(
     `Subtotal (${fromCurrency}): ${Money.format(subtotal, fromCurrency)}`,
   );
+
   console.log(
     `Subtotal (${toCurrency}): ${Money.format(convertedAmount, toCurrency)}`,
   );
@@ -94,17 +126,25 @@ async function comparePrices(
   for (const price of prices) {
     if (price.currency === baseCurrency) {
       console.log(
-        `${Money.format(price.amount, price.currency)} = ${Money.format(price.amount, 'USD')}`,
+        `${Money.format(price.amount, price.currency)} = ${Money.format(
+          price.amount,
+          baseCurrency,
+        )}`,
       );
-    } else {
-      const converted = await Exchange.from(price.currency)
-        .to(baseCurrency)
-        .convert(price.amount);
 
-      console.log(
-        `${Money.format(price.amount, price.currency)} = ${Money.format(converted, 'USD')}`,
-      );
+      continue;
     }
+
+    const converted = await Exchange.from(price.currency)
+      .to(baseCurrency)
+      .convert(price.amount);
+
+    console.log(
+      `${Money.format(price.amount, price.currency)} = ${Money.format(
+        converted,
+        baseCurrency,
+      )}`,
+    );
   }
 }
 
@@ -124,6 +164,8 @@ await comparePrices([
 ```
 
 ## Real-time Exchange Display
+
+Use `rate()` when you only need the exchange rate and `convert()` when you need the converted amount.
 
 ```typescript
 async function displayExchangeRates(baseCurrency: string, targets: string[]) {
@@ -198,7 +240,11 @@ await displaySubscriptionPrices('Pro Plan', 29.99, [
 
 ```typescript
 async function calculateCartTotal(
-  items: Array<{ name: string; price: number; currency: string }>,
+  items: Array<{
+    name: string;
+    price: number;
+    currency: string;
+  }>,
   displayCurrency: string,
 ) {
   let total = 0;
@@ -213,7 +259,10 @@ async function calculateCartTotal(
     total += converted;
 
     console.log(
-      `${item.name}: ${Money.format(item.price, item.currency)} → ${Money.format(converted, displayCurrency)}`,
+      `${item.name}: ${Money.format(
+        item.price,
+        item.currency,
+      )} → ${Money.format(converted, displayCurrency)}`,
     );
   }
 
@@ -232,3 +281,32 @@ await calculateCartTotal(
   'USD',
 );
 ```
+
+## Switching Providers
+
+You can change the exchange-rate provider without changing your conversion code.
+
+```typescript
+import { Exchange, ExchangeRateApi, FrankfurterApi } from '@toneflix/money';
+
+// Use ExchangeRate-API
+Exchange.setProvider(ExchangeRateApi);
+Exchange.setApiKey('your-api-key');
+
+const exchangeRateApiResult = await Exchange.from('USD').to('EUR').convert(100);
+
+// Switch to Frankfurter
+Exchange.setProvider(FrankfurterApi);
+
+const frankfurterResult = await Exchange.from('USD').to('EUR').convert(100);
+```
+
+The same `Exchange` methods work across providers:
+
+- `Exchange.from()`
+- `Exchange.to()`
+- `convert()`
+- `rate()`
+- `format()`
+
+Provider-specific authentication and API behaviour are handled by the selected provider.

@@ -6,16 +6,16 @@ Browse practical examples of using @toneflix/money.
 
 See various ways to format currency amounts.
 
-[Go to Formatting Examples →](/examples/formatting)
+[Go to Formatting Examples →](./formatting)
 
 ## Conversion Examples
 
 Learn how to convert between currencies.
 
-[Go to Conversion Examples →](/examples/conversion)
+[Go to Conversion Examples →](./conversion)
 
 ## Calculation Examples
 
 Explore mathematical operations with money.
 
-[Go to Calculation Examples →](/examples/calculations)
+[Go to Calculation Examples →](./calculations)

@@ -60,6 +60,8 @@ export default defineConfig({
                     items: [
                         { text: 'Money Class', link: '/api/money' },
                         { text: 'Exchange Class', link: '/api/exchange' },
+                        { text: 'ExchangeRateApi Class', link: '/api/exchange-rate-api' },
+                        { text: 'FrankfurterApi Class', link: '/api/frankfurter-api' },
                     ]
                 }
             ],

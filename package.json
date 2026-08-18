@@ -36,7 +36,8 @@
     "toneflix"
   ],
   "scripts": {
-    "test": "pnpm vitest --no-isolate",
+    "test": "pnpm vitest run --no-isolate",
+    "test:watch": "pnpm vitest run --no-isolate --watch",
     "lint": "eslint . --ext .ts --ext .js",
     "build": "tsdown",
     "release": "pnpm build && pnpm changeset version && pnpm changeset publish",

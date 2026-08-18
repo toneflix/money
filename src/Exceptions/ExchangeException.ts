@@ -1,3 +1,5 @@
+import { ExchangeRateContract } from '../types'
+
 type ExchangeErrorType =
     'missing-target' |
     'missing-source' |
@@ -12,9 +14,10 @@ type ExchangeErrorType =
  * Exchange Exception Class
  */
 export class ExchangeException extends Error {
-    public apiProvider = 'https://www.exchangerate-api.com'
-
-    constructor(public type: ExchangeErrorType | Error) {
+    constructor(
+        public type: ExchangeErrorType | Error | string,
+        private provider?: ExchangeRateContract
+    ) {
         let message = ''
 
         if (type instanceof ExchangeException) {
@@ -22,6 +25,7 @@ export class ExchangeException extends Error {
             super(message)
             this.name = 'ExchangeException'
             this.type = type.type || 'unknown'
+            this.provider = type.provider
 
             return
         }

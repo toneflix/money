@@ -1,6 +1,8 @@
 # Exchange Class
 
-The Exchange class handles currency conversion with live exchange rates.
+The `Exchange` class handles currency conversion with live exchange rates through a configurable exchange-rate provider.
+
+`ExchangeRateApi` is the default provider for backwards compatibility. You can switch providers using `Exchange.setProvider()`.
 
 ## Constructor
 
@@ -8,13 +10,13 @@ The Exchange class handles currency conversion with live exchange rates.
 new Exchange(source?: CurrencyCode, target?: CurrencyCode, amount?: number)
 ```
 
-Create a new Exchange instance.
+Create a new `Exchange` instance.
 
 **Parameters:**
 
 - `source` - Source currency code (optional)
 - `target` - Target currency code (optional)
-- `amount` - Amount to convert (optional, default: 1)
+- `amount` - Amount to convert (optional, default: `1`)
 
 **Example:**
 
@@ -30,7 +32,9 @@ const exchange = new Exchange('USD', 'EUR', 100);
 Exchange.setApiKey(key: string): void
 ```
 
-Set the API key for exchange rate requests.
+Set the API key used by providers that require authentication.
+
+This method is preserved for backwards compatibility with `ExchangeRateApi`.
 
 **Example:**
 
@@ -38,11 +42,34 @@ Set the API key for exchange rate requests.
 Exchange.setApiKey('your-api-key-here');
 ```
 
-**Getting an API Key:**
+When using `ExchangeRateApi`, you can provide the API key using `Exchange.setApiKey()` or the `EXCHANGERATE_API_KEY` environment variable.
 
-1. Sign up at [exchangerate-api.com](https://www.exchangerate-api.com/)
-2. Get your free API key
-3. Set it using `Exchange.setApiKey()` or via `EXCHANGERATE_API_KEY` environment variable
+Providers such as `FrankfurterApi` do not require an API key.
+
+### setProvider()
+
+```typescript
+Exchange.setProvider(provider: ExchangeRateProvider): void
+```
+
+Set the exchange-rate provider used by `Exchange`.
+
+Pass the provider class itself, not an instance.
+
+**Example:**
+
+```typescript
+import { Exchange, ExchangeRateApi, FrankfurterApi } from '@toneflix/money';
+
+// ExchangeRateApi is the default provider
+Exchange.setProvider(ExchangeRateApi);
+Exchange.setApiKey('your-api-key-here');
+
+// Switch to Frankfurter
+Exchange.setProvider(FrankfurterApi);
+```
+
+The configured provider is used for subsequent conversions and exchange-rate requests.
 
 ### from()
 
@@ -50,7 +77,7 @@ Exchange.setApiKey('your-api-key-here');
 Exchange.from(currency: CurrencyCode): Exchange
 ```
 
-Create an Exchange instance with source currency (static method).
+Create an `Exchange` instance with the source currency.
 
 **Example:**
 
@@ -64,7 +91,7 @@ const exchange = Exchange.from('USD');
 Exchange.to(currency: CurrencyCode): Exchange
 ```
 
-Create an Exchange instance with target currency (static method).
+Create an `Exchange` instance with the target currency.
 
 **Example:**
 
@@ -75,17 +102,61 @@ const exchange = Exchange.to('EUR');
 ### format()
 
 ```typescript
-Exchange.format(amount: number, from: CurrencyCode, to: CurrencyCode): Promise<string>
+Exchange.format(
+  amount: number,
+  from: CurrencyCode,
+  to: CurrencyCode,
+): Promise<string>
 ```
 
-Convert and format amount in one call (static method).
+Convert and format an amount in one call using the currently configured provider.
 
 **Example:**
 
 ```typescript
 const formatted = await Exchange.format(100, 'USD', 'EUR');
+
 // e.g., "€92.50"
 ```
+
+## Exchange Rate Providers
+
+### ExchangeRateApi
+
+`ExchangeRateApi` is the default provider and requires an API key.
+
+Existing code continues to work without explicitly selecting the provider:
+
+```typescript
+import { Exchange } from '@toneflix/money';
+
+Exchange.setApiKey('your-api-key-here');
+
+const result = await Exchange.from('USD').to('EUR').convert(100);
+```
+
+You can also select it explicitly:
+
+```typescript
+import { Exchange, ExchangeRateApi } from '@toneflix/money';
+
+Exchange.setProvider(ExchangeRateApi);
+Exchange.setApiKey('your-api-key-here');
+```
+
+### FrankfurterApi
+
+`FrankfurterApi` does not require an API key.
+
+```typescript
+import { Exchange, FrankfurterApi } from '@toneflix/money';
+
+Exchange.setProvider(FrankfurterApi);
+
+const result = await Exchange.from('USD').to('EUR').convert(100);
+```
+
+The public `Exchange` API remains the same regardless of the selected provider.
 
 ## Instance Methods
 
@@ -120,17 +191,27 @@ exchange.to('EUR');
 ### convert()
 
 ```typescript
-convert(amount: number, source?: CurrencyCode, target?: CurrencyCode): this
+convert(
+  amount: number,
+  source?: CurrencyCode,
+  target?: CurrencyCode,
+): this
 ```
 
-Set conversion parameters. Returns `this` for chaining.
+Set the conversion parameters.
+
+The method returns `this` for chaining. The selected provider performs the conversion when the chain is awaited or executed through the thenable interface.
 
 **Example:**
 
 ```typescript
 const result = await exchange.convert(100);
-// or with optional parameters
+
+// Or provide the currencies directly
 const result = await exchange.convert(100, 'USD', 'EUR');
+
+// Or use the chainable API
+const result = await exchange.from('USD').to('EUR').convert(100);
 ```
 
 ### rate()
@@ -139,13 +220,16 @@ const result = await exchange.convert(100, 'USD', 'EUR');
 rate(source?: CurrencyCode, target?: CurrencyCode): this
 ```
 
-Get exchange rate. Returns `this` for chaining.
+Get the exchange rate between two currencies.
+
+The method returns `this` for chaining.
 
 **Example:**
 
 ```typescript
 const rate = await exchange.rate('USD', 'EUR');
-// or chained
+
+// Or chained
 const rate = await exchange.from('USD').to('EUR').rate();
 ```
 
@@ -155,29 +239,32 @@ const rate = await exchange.from('USD').to('EUR').rate();
 format(): Promise<string>
 ```
 
-Format the converted amount with currency symbol.
+Convert and format the resulting amount using the target currency.
 
 **Example:**
 
 ```typescript
 const formatted = await exchange.from('USD').to('EUR').convert(100).format();
+
 // e.g., "€92.50"
 ```
 
 ## Thenable Interface
 
-The Exchange class implements a "thenable" interface for seamless async/await integration.
+The `Exchange` class implements a thenable interface for seamless `async`/`await` integration.
+
+Methods such as `from()`, `to()`, `convert()`, and `rate()` return the `Exchange` instance synchronously. The provider request is executed when the chain is awaited or when a Promise method is called.
 
 ### then()
 
 ```typescript
 then<T>(
   onFulfilled?: (value: number) => T | PromiseLike<T>,
-  onRejected?: (reason: any) => T | PromiseLike<T>
+  onRejected?: (reason: any) => T | PromiseLike<T>,
 ): Promise<T>
 ```
 
-Execute the conversion chain.
+Execute the exchange chain.
 
 **Example:**
 
@@ -192,10 +279,12 @@ exchange
 ### catch()
 
 ```typescript
-catch<T>(onRejected?: (reason: any) => T | PromiseLike<T>): Promise<T>
+catch<T>(
+  onRejected?: (reason: any) => T | PromiseLike<T>,
+): Promise<T>
 ```
 
-Catch errors in the conversion chain.
+Catch errors from the exchange chain.
 
 **Example:**
 
@@ -213,7 +302,7 @@ exchange
 finally(onFinally?: (() => void) | null): Promise<number>
 ```
 
-Execute cleanup after conversion.
+Execute a callback after the exchange operation completes.
 
 **Example:**
 
@@ -227,16 +316,16 @@ exchange
 
 ## How Thenable Works
 
-The thenable pattern allows methods to return `this` synchronously for chaining, while async execution only happens when awaited or `.then()` is called:
+The thenable pattern allows the API to remain synchronously chainable while deferring the asynchronous provider request until the result is needed.
 
 ```typescript
-// Build chain (synchronous)
+// Build the chain synchronously
 const chain = exchange.from('USD').to('EUR').convert(100);
 
-// Execute (asynchronous)
+// Execute asynchronously
 const result = await chain;
 
-// Or with callbacks
+// Or use Promise methods
 chain
   .then((result) => console.log(result))
   .catch((error) => console.error(error))
@@ -245,25 +334,43 @@ chain
 
 ## Error Handling
 
+Provider-specific errors are exposed through the same `Exchange` chain.
+
 ```typescript
 try {
   const result = await Exchange.from('USD').to('EUR').convert(100);
+
+  console.log(result);
 } catch (error) {
   if (error.type === 'missing-key') {
-    console.error('Please set your API key');
+    console.error('Please configure an API key for the selected provider');
   } else {
     console.error('Conversion error:', error.message);
   }
 }
 ```
 
+The `missing-key` error applies to providers that require authentication, such as `ExchangeRateApi`.
+
+`FrankfurterApi` does not require an API key.
+
 ## Environment Variables
 
-The library automatically loads the `.env` file if it exists. You can set:
+Environment configuration is provider-specific.
+
+`ExchangeRateApi` supports API-key configuration through:
 
 ```bash
 # .env file
 EXCHANGERATE_API_KEY=your-api-key-here
 ```
 
-No need to call `Exchange.setApiKey()` if the environment variable is set.
+You can use the environment variable instead of calling:
+
+```typescript
+Exchange.setApiKey('your-api-key-here');
+```
+
+`Exchange.setApiKey()` takes care of the backwards-compatible runtime configuration, while the selected provider handles its own environment configuration.
+
+When using `FrankfurterApi`, no API key or environment variable is required.

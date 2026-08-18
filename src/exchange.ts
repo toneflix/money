@@ -1,225 +1,286 @@
-import { CurrencyCode } from './types'
+import {
+    CurrencyCode,
+    ExchangeRateInput,
+    ExchangeRateProvider,
+} from './types'
+
 import { ExchangeException } from './Exceptions/ExchangeException'
+import { ExchangeRateApi } from './providers/exchage/ExchangeRateApi'
 import { Money } from './money'
 import { loadEnv } from './utils/env'
 
 export class Exchange {
-    private static apiKey: string
-
-    result: number | string = 0
-    caller: () => Promise<number> = async () => 0
+    /**
+     * Legacy globally configured API key.
+     *
+     * Kept for backwards compatibility with {@link setApiKey}('...')
+     * 
+     * @deprecated use {@link setProvider} instead
+     */
+    private static apiKey?: string
 
     /**
-     * 
-     * @param from 
-     * @param to 
-     * @param rate 
+     * Provider used to perform currency conversions.
+     *
+     * {@link ExchangeRateApi} remains the default provider so existing users do not
+     * need to explicitly configure a provider.
      */
+    private static provider: ExchangeRateProvider = ExchangeRateApi
+
+    result: number | string = 0
+
+    /**
+     * Deferred operation executed when the Exchange instance is awaited.
+     */
+    caller: () => Promise<number> = async () => 0
+
     constructor(
         private source?: CurrencyCode,
         private target?: CurrencyCode,
         private amount: number = 1,
-    ) {
-    }
+    ) { }
 
     /**
-     * Set API key
-     * 
-     * @param key 
+     * Set the API key globally.
+     *
+     * This method is intentionally preserved for backwards compatibility.
+     * The key is passed to the selected exchange-rate provider.
+     *
+     * @param key API key used by providers that require authentication.
      */
-    static setApiKey (key: string) {
+    static setApiKey(key: string): void {
         Exchange.apiKey = key
     }
 
     /**
-     * Convert amount from one currency to another
-     * 
-     * @param amount 
-     * @param from 
-     * @param to 
-     * @returns 
+     * Set the provider used for exchange-rate requests.
+     *
+     * @param provider Exchange-rate provider constructor.
      */
-    convert (amount: number, source?: CurrencyCode, target?: CurrencyCode): this {
-        if (!source && !this.source)
-            throw new ExchangeException('missing-source')
+    static setProvider(provider: ExchangeRateProvider): void {
+        Exchange.provider = provider
+    }
 
-        if (!target && !this.target)
+    /**
+     * Reset global Exchange configuration to its defaults.
+     *
+     * Primarily useful for testing or applications that need to
+     * reinitialize exchange configuration.
+     */
+    static reset(): void {
+        Exchange.apiKey = undefined
+        Exchange.provider = ExchangeRateApi
+    }
+
+    /**
+     * Convert an amount from one currency to another.
+     *
+     * The actual conversion is deferred until the Exchange instance is
+     * awaited, formatted, or its promise methods are used.
+     *
+     * @param amount Amount to convert.
+     * @param source Optional source currency.
+     * @param target Optional target currency.
+     */
+    convert(
+        amount: number,
+        source?: CurrencyCode,
+        target?: CurrencyCode,
+    ): this {
+        if (!source && !this.source) {
+            throw new ExchangeException('missing-source')
+        }
+
+        if (!target && !this.target) {
             throw new ExchangeException('missing-target')
+        }
 
         this.source = source ?? this.source
         this.target = target ?? this.target
         this.amount = amount
 
-        this.caller = async () => await this.send()
+        this.caller = () => this.send(false)
 
         return this
     }
 
     /**
-     * Get exchange rate
-     * 
-     * @param source 
-     * @param target 
-     * @returns 
+     * Retrieve the exchange rate between two currencies.
+     *
+     * @param source Optional source currency.
+     * @param target Optional target currency.
      */
-    rate (source?: CurrencyCode, target?: CurrencyCode): this {
-        if (!source && !this.source)
+    rate(
+        source?: CurrencyCode,
+        target?: CurrencyCode,
+    ): this {
+        if (!source && !this.source) {
             throw new ExchangeException('missing-source')
+        }
 
-        if (!target && !this.target)
+        if (!target && !this.target) {
             throw new ExchangeException('missing-target')
+        }
 
         this.source = source ?? this.source
         this.target = target ?? this.target
 
-        this.caller = async () => await this.send(true)
+        this.caller = () => this.send(true)
 
         return this
     }
 
     /**
-     * Set source currency
-     * 
-     * @param from 
-     * @returns 
+     * Set the source currency.
+     *
+     * @param source Source currency.
      */
-    from (from: CurrencyCode): this {
-        this.source = from
+    from(source: CurrencyCode): this {
+        this.source = source
 
         return this
     }
 
     /**
-     * Set target currency
-     * 
-     * @param to 
-     * @returns 
+     * Set the target currency.
+     *
+     * @param target Target currency.
      */
-    to (to: CurrencyCode): this {
-        this.target = to
+    to(target: CurrencyCode): this {
+        this.target = target
 
         return this
     }
 
     /**
-     * Set source currency statically
-     * 
-     * @param from 
-     * @returns 
+     * Create an Exchange instance with a source currency.
+     *
+     * Allows:
+     *
+     * Exchange.from('USD').to('EUR').convert(100)
      */
-    static from (from: CurrencyCode): Exchange {
-        const exchange = new Exchange()
-        exchange.from(from)
-
-        return exchange
+    static from(source: CurrencyCode): Exchange {
+        return new Exchange().from(source)
     }
 
     /**
-     * Set target currency statically
-     * 
-     * @param to 
-     * @returns 
+     * Create an Exchange instance with a target currency.
      */
-    static to (to: CurrencyCode): Exchange {
-        const exchange = new Exchange()
-        exchange.to(to)
-
-        return exchange
+    static to(target: CurrencyCode): Exchange {
+        return new Exchange().to(target)
     }
 
     /**
-     * Format converted amount
-     * 
-     * @returns 
+     * Execute the current conversion and format the resulting amount.
      */
-    async format (): Promise<string> {
-        return new Money(await this.caller(), this.target).format()
+    async format(): Promise<string> {
+        const result = await this.caller()
+
+        return new Money(result, this.target).format()
     }
 
     /**
-     * Format converted amount statically
-     * 
-     * @param amount 
-     * @param from 
-     * @param to 
-     * @returns 
+     * Convert and format an amount in one operation.
      */
-    static format = async (
+    static async format(
         amount: number,
-        from: CurrencyCode,
-        to: CurrencyCode
-    ): Promise<string> => {
-        const exchange = new Exchange(from, to, amount)
-        const result = await exchange.convert(amount).format()
-
-        return result
+        source: CurrencyCode,
+        target: CurrencyCode,
+    ): Promise<string> {
+        return new Exchange(source, target)
+            .convert(amount)
+            .format()
     }
 
     /**
-     * Send request to exchange API
-     * 
-     * @param getRate 
-     * @returns 
+     * Execute the configured operation using the selected provider.
+     *
+     * Exchange itself does not know anything about HTTP endpoints or provider
+     * response formats. Those responsibilities belong to the provider.
+     *
+     * The globally configured API key is forwarded to the provider to preserve
+     * compatibility with Exchange.setApiKey().
+     *
+     * @param getRate When true, return the exchange rate instead of converting.
      */
-    private async send (getRate?: boolean): Promise<number> {
-        // Load .env file if it exists
+    private async send(getRate = false): Promise<number> {
+        if (!this.source) {
+            throw new ExchangeException('missing-source')
+        }
+
+        if (!this.target) {
+            throw new ExchangeException('missing-target')
+        }
+
+        /**
+         * Preserve the previous environment-variable behavior.
+         *
+         * This allows all of these to continue working:
+         *
+         * Exchange.setApiKey('...')
+         * EXCHANGERATE_API_KEY=...
+         * VITE_EXCHANGERATE_API_KEY=...
+         * NEXT_EXCHANGERATE_API_KEY=...
+         */
         await loadEnv()
 
-        const key = process.env.EXCHANGERATE_API_KEY ??
+        const apiKey =
+            Exchange.apiKey ??
+            process.env.EXCHANGERATE_API_KEY ??
             process.env.VITE_EXCHANGERATE_API_KEY ??
-            process.env.NEXT_EXCHANGERATE_API_KEY ?? ''
+            process.env.NEXT_EXCHANGERATE_API_KEY
 
-        if (key === '' || Exchange.apiKey === '') {
-            throw new ExchangeException('missing-key')
+        const config: ExchangeRateInput = {
+            source: this.source,
+            target: this.target,
+            amount: this.amount,
         }
 
-        const apiKey = Exchange.apiKey ?? key!
-        const baseUrl = `https://v6.exchangerate-api.com/v6/${apiKey}`
+        /**
+         * Instantiate the configured provider.
+         *
+         * Providers that do not require an API key can simply ignore the
+         * second constructor argument.
+         */
+        const provider = new Exchange.provider(config, apiKey)
 
-        try {
-            const result = await fetch(`${baseUrl}/pair/${this.source}/${this.target}/${this.amount}`)
-            const data = await result.json()
-            if (data.result === 'success') {
-                return Promise.resolve(getRate ? data.conversion_rate : data.conversion_result)
-            }
-            throw new ExchangeException(data['error-type'] || 'An error occurred while fetching exchange rate')
-        } catch (error: any) {
-            throw new ExchangeException(error)
-        }
+        return getRate
+            ? provider.rate()
+            : provider.convert()
     }
 
     /**
-     * Makes the Exchange class "thenable" so it can be awaited
-     * Automatically executes the chain when awaited or .then() is called
-     * 
-     * @param onFulfilled 
-     * @param onRejected 
-     * @returns 
+     * Makes Exchange thenable.
+     *
+     * This allows an Exchange chain to be awaited directly:
+     *
+     * const result = await Exchange
+     *     .from('USD')
+     *     .to('EUR')
+     *     .convert(100)
      */
-    then<T> (
+    then<T>(
         onFulfilled?: (value: number) => T | PromiseLike<T>,
-        onRejected?: (reason: any) => T | PromiseLike<T>
+        onRejected?: (reason: unknown) => T | PromiseLike<T>,
     ): Promise<T> {
         return this.caller().then(onFulfilled, onRejected)
     }
 
     /**
-     * Catch errors in the promise chain
-     * 
-     * @param onRejected 
-     * @returns 
+     * Catch errors from the deferred exchange operation.
      */
-    catch<T> (onRejected?: (reason: any) => T | PromiseLike<T>): Promise<T> {
-        return this.caller().then(undefined, onRejected)
+    catch<T>(
+        onRejected?: (reason: unknown) => T | PromiseLike<T>,
+    ): Promise<number | T> {
+        return this.caller().catch(onRejected)
     }
 
     /**
-     * Finally handler for the promise chain
-     * 
-     * @param onFinally 
-     * @returns 
+     * Run a callback after the deferred exchange operation completes.
      */
-    finally (onFinally?: (() => void) | null): Promise<number> {
+    finally(
+        onFinally?: (() => void) | null,
+    ): Promise<number> {
         return this.caller().finally(onFinally)
     }
 }

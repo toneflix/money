@@ -159,3 +159,23 @@ export type CurrencyCode =
     'ZAR' |
     'ZMK' |
     'ZWD';
+
+export interface ExchangeRateInput {
+    source: CurrencyCode
+    target: CurrencyCode
+    amount: number
+}
+
+export interface ExchangeRateContract {
+    source(value: CurrencyCode): this
+    target(value: CurrencyCode): this
+    amount(value: number): this
+
+    convert(): Promise<number>
+    rate(): Promise<number>
+}
+
+export type ExchangeRateProvider = new (
+    config?: ExchangeRateInput,
+    apiKey?: string,
+) => ExchangeRateContract
