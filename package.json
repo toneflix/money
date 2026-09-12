@@ -1,7 +1,7 @@
 {
   "name": "@toneflix/money",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.",
   "main": "./dist/index.cjs",
   "private": false,
