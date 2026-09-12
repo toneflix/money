@@ -3,7 +3,7 @@ import { mod, multiply, round, share, subtract } from './calculator'
 
 import { CurrencyCode } from './types'
 import { Exchange } from './exchange'
-import { currencies } from './currencies'
+import { currencies as currencyList } from './currencies'
 
 /**
  * Currency Type
@@ -40,7 +40,7 @@ export class Money {
      */
     readonly #currencyMap: Record<string, NormalizedCurrency> =
         Object.fromEntries(
-            currencies.map((c) => [
+            currencyList.map((c) => [
                 c.code,
                 {
                     symbol: c.symbol,
@@ -445,3 +445,5 @@ export class Money {
         return this.format()
     }
 }
+
+export const currencies = currencyList
