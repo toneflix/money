@@ -3,7 +3,7 @@ import { mod, multiply, round, share, subtract } from './calculator'
 
 import { CurrencyCode } from './types'
 import { Exchange } from './exchange'
-import { currencies as currencyList } from './currencies'
+import { currencies } from './currencies'
 
 /**
  * Currency Type
@@ -40,7 +40,7 @@ export class Money {
      */
     readonly #currencyMap: Record<string, NormalizedCurrency> =
         Object.fromEntries(
-            currencyList.map((c) => [
+            currencies.map((c) => [
                 c.code,
                 {
                     symbol: c.symbol,
@@ -61,7 +61,7 @@ export class Money {
         }
     }
 
-    static setDefaultCurrency (currency: CurrencyCode) {
+    static setDefaultCurrency(currency: CurrencyCode) {
         Money.currency = currency
     }
 
@@ -70,7 +70,7 @@ export class Money {
      * 
      * @param style 
      */
-    setNegativeStyle (style: NegativeStyle) {
+    setNegativeStyle(style: NegativeStyle) {
         this.negativeStyle = style
     }
 
@@ -81,7 +81,7 @@ export class Money {
      * @param currency 
      * @returns 
      */
-    static of (amount: number | string, currency?: CurrencyCode) {
+    static of(amount: number | string, currency?: CurrencyCode) {
         return new Money(amount, currency)
     }
 
@@ -92,7 +92,7 @@ export class Money {
      * @param decimals 
      * @returns 
      */
-    private formatNumber (value: number, decimals: number): string {
+    private formatNumber(value: number, decimals: number): string {
         const fixed = value.toFixed(decimals)
         const [int, frac] = fixed.split('.')
         const withCommas = int.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -100,7 +100,7 @@ export class Money {
         return frac ? `${withCommas}.${frac}` : withCommas
     }
 
-    private regularizedAmount (): number {
+    private regularizedAmount(): number {
         return typeof this.amount === 'string' ? parseFloat(this.amount) : this.amount || 0
     }
 
@@ -111,7 +111,7 @@ export class Money {
      * @param isNegative 
      * @returns 
      */
-    private applyNegative (value: string, isNegative: boolean): string {
+    private applyNegative(value: string, isNegative: boolean): string {
         if (!isNegative) return value
 
         return this.negativeStyle === 'parentheses'
@@ -127,7 +127,7 @@ export class Money {
      * @param position 
      * @returns 
      */
-    private placeSymbol (
+    private placeSymbol(
         symbol: string,
         number: string,
         position: 'before' | 'after'
@@ -142,7 +142,7 @@ export class Money {
      * 
      * @returns 
      */
-    value (): number {
+    value(): number {
         return this.regularizedAmount()
     }
 
@@ -151,7 +151,7 @@ export class Money {
      * 
      * @returns 
      */
-    format () {
+    format() {
         const c = this.#currencyMap[Money.currency]
         if (!c) return `${Money.currency} ${this.amount}`
 
@@ -168,7 +168,7 @@ export class Money {
      * 
      * @returns 
      */
-    whole () {
+    whole() {
         const c = this.#currencyMap[Money.currency]
         if (!c) return `${Money.currency} ${this.amount}`
 
@@ -185,7 +185,7 @@ export class Money {
      * 
      * @returns 
      */
-    compact () {
+    compact() {
         const c = this.#currencyMap[Money.currency]
         if (!c) return `${Money.currency} ${this.amount}`
 
@@ -221,7 +221,7 @@ export class Money {
      * @param to 
      * @returns 
      */
-    async convert (to: CurrencyCode) {
+    async convert(to: CurrencyCode) {
         return Money.of(
             await Exchange
                 .from(Money.currency)
@@ -237,7 +237,7 @@ export class Money {
      * @param to 
      * @returns 
      */
-    static async convert (amount: number | string, from: CurrencyCode, to: CurrencyCode) {
+    static async convert(amount: number | string, from: CurrencyCode, to: CurrencyCode) {
         return Money.of(amount, from).convert(to)
     }
 
@@ -246,7 +246,7 @@ export class Money {
      * 
      * @returns 
      */
-    currencyCode (): CurrencyCode {
+    currencyCode(): CurrencyCode {
         return Money.currency
     }
 
@@ -255,7 +255,7 @@ export class Money {
      * 
      * @returns 
      */
-    currencySymbol (): string {
+    currencySymbol(): string {
         const c = this.#currencyMap[Money.currency]
 
         return c ? c.symbol : Money.currency
@@ -268,7 +268,7 @@ export class Money {
      * @param currencyCode 
      * @returns 
      */
-    static format (amount: number | string, currencyCode?: CurrencyCode): string {
+    static format(amount: number | string, currencyCode?: CurrencyCode): string {
         return Money.of(amount, currencyCode).format()
     }
 
@@ -279,7 +279,7 @@ export class Money {
      * @param currencyCode 
      * @returns 
      */
-    static whole (amount: number | string, currencyCode?: CurrencyCode): string {
+    static whole(amount: number | string, currencyCode?: CurrencyCode): string {
         return Money.of(amount, currencyCode).whole()
     }
 
@@ -290,7 +290,7 @@ export class Money {
      * @param currencyCode 
      * @returns 
      */
-    static compact (amount: number | string, currencyCode?: CurrencyCode): string {
+    static compact(amount: number | string, currencyCode?: CurrencyCode): string {
         return Money.of(amount, currencyCode).compact()
     }
 
@@ -299,7 +299,7 @@ export class Money {
      * 
      * @returns 
      */
-    static currencySymbol (): string {
+    static currencySymbol(): string {
         const c = (new Money()).#currencyMap[Money.currency]
 
         return c ? c.symbol : Money.currency
@@ -310,7 +310,7 @@ export class Money {
      * 
      * @returns 
      */
-    static currencyCode (): CurrencyCode {
+    static currencyCode(): CurrencyCode {
         return Money.currency
     }
 
@@ -320,7 +320,7 @@ export class Money {
      * @param other 
      * @returns 
      */
-    add (other: number | string | Money): Money {
+    add(other: number | string | Money): Money {
         if (other instanceof Money) {
             other = other.regularizedAmount()
         }
@@ -334,7 +334,7 @@ export class Money {
      * @param other 
      * @returns 
      */
-    subtract (other: number | string | Money): Money {
+    subtract(other: number | string | Money): Money {
         if (other instanceof Money) {
             other = other.regularizedAmount()
         }
@@ -348,7 +348,7 @@ export class Money {
      * @param factor 
      * @returns 
      */
-    multiply (factor: number | string | Money): Money {
+    multiply(factor: number | string | Money): Money {
         if (factor instanceof Money) {
             factor = factor.regularizedAmount()
         }
@@ -362,7 +362,7 @@ export class Money {
      * @param divisor 
      * @returns 
      */
-    divide (divisor: number | string | Money): Money {
+    divide(divisor: number | string | Money): Money {
         if (divisor instanceof Money) {
             divisor = divisor.regularizedAmount()
         }
@@ -375,7 +375,7 @@ export class Money {
      * 
      * @returns 
      */
-    ceil (): Money {
+    ceil(): Money {
         return Money.of(ceil(this.regularizedAmount()))
     }
 
@@ -384,7 +384,7 @@ export class Money {
      * 
      * @returns 
      */
-    floor (): Money {
+    floor(): Money {
         return Money.of(floor(this.regularizedAmount()))
     }
 
@@ -395,7 +395,7 @@ export class Money {
      * @param ratio 
      * @returns 
      */
-    share (total: number | string | Money, ratio: string | number): Money {
+    share(total: number | string | Money, ratio: string | number): Money {
         if (total instanceof Money) {
             total = total.regularizedAmount()
         }
@@ -409,7 +409,7 @@ export class Money {
      * @param digits 
      * @returns 
      */
-    round (digits: number = 0): Money {
+    round(digits: number = 0): Money {
         return Money.of(round(this.regularizedAmount(), digits))
     }
 
@@ -419,7 +419,7 @@ export class Money {
      * @param divisor 
      * @returns 
      */
-    mod (divisor: number | string | Money): Money {
+    mod(divisor: number | string | Money): Money {
         if (divisor instanceof Money) {
             divisor = divisor.regularizedAmount()
         }
@@ -432,7 +432,7 @@ export class Money {
      * 
      * @returns 
      */
-    absolute (): Money {
+    absolute(): Money {
         return Money.of(absolute(this.regularizedAmount()))
     }
 
@@ -441,9 +441,7 @@ export class Money {
      * 
      * @returns 
      */
-    toString (): string {
+    toString(): string {
         return this.format()
     }
 }
-
-export const currencies = currencyList

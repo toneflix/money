@@ -3,7 +3,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "A simple and efficient money and currency conversion and formatting tool for JavaScript and TypeScript projects.",
-  "main": "./dist/money.cjs",
+  "main": "./dist/index.cjs",
   "private": false,
   "homepage": "https://toneflix.github.io/money",
   "repository": {
@@ -13,10 +13,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "import": "./dist/money.js",
-      "require": "./dist/money.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./types": {
+      "import": "./dist/types.js",
+      "require": "./dist/types.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -56,7 +62,5 @@
     "typescript-eslint": "^8.53.0",
     "vitepress": "^1.6.4",
     "vitest": "^3.2.4"
-  },
-  "module": "./dist/money.js",
-  "types": "./dist/money.d.cts"
+  }
 }
