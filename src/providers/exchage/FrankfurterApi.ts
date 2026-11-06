@@ -90,15 +90,13 @@ export class FrankfurterApi implements ExchangeRateContract {
         const baseUrl = 'https://api.frankfurter.dev/v2'
 
         try {
-            const result = await fetch(
-                `${baseUrl}/rate/${source}/${target}/${amount}`,
-            )
+            const result = await fetch(`${baseUrl}/rate/${source}/${target}`)
 
             const data = await result.json()
             if (typeof data.rate === 'number' && Number.isFinite(data.rate)) {
                 return {
                     conversion_rate: data.rate,
-                    conversion_result: data.rate * this.config.amount,
+                    conversion_result: data.rate * amount,
                 }
             }
 
