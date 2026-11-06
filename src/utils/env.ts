@@ -1,5 +1,9 @@
 import helpers from './helpers'
 
+type NodeBuiltins = { getBuiltinModule?: (id: string) => unknown }
+type NodeFs = { existsSync: (path: string) => boolean, readFileSync: (path: string, encoding: 'utf-8') => string }
+type NodePath = { resolve: (...paths: string[]) => string }
+
 /**
  * Simple .env file parser
  * Reads and parses .env file without external dependencies
@@ -23,12 +27,13 @@ export const loadEnv = async (filePath: string = '.env'): Promise<void> => {
             return void helpers.useSetEnvLoaded(true)
         }
 
-        const nodeOnly = ['node:fs', 'node:path']
+        // Node's built-in modules, read without import() so bundlers such as Metro never see them.
+        const builtin = (process as NodeBuiltins).getBuiltinModule
 
-        const [{ default: fs }, { default: path }] = await Promise.all([
-            import(/*! @vite-ignore */String(nodeOnly[0])),
-            import(/*! @vite-ignore */String(nodeOnly[1])),
-        ])
+        if (typeof builtin !== 'function') return
+
+        const fs = builtin('node:fs') as NodeFs
+        const path = builtin('node:path') as NodePath
 
         const envPath = path.resolve(process.cwd(), filePath)
 
